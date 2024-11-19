@@ -1,0 +1,18 @@
+.gitignore.envgit init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/Ze0ro99/MetaConnect.git
+git push -u origin main
+
+---
+
+## **4. ضغط المشروع ورفعه على MetaConnect**
+
+1. **انتقل إلى مجلد المشروع:**
+   ```bash
+   cd MetaConnect
+git init
+git add .
+git commit -m "Initial commit with JWT setup"
+git remote add origin https://github.com/Ze0ro99/MetaConnect.git
+git push -u origin main

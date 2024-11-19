@@ -1,0 +1,50 @@
+nodejs-build.yml.github/workflows/
+.github/workflows/nodejs-build.yml
+nodejs-build.ymlname: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+
+    steps:
+    # 1. التحقق من المستودع
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # 2. إعداد Node.js باستخدام الإصدار المحدد في المصفوفة
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'  # تمكين التخزين المؤقت للتبعيات
+
+    # 3. تثبيت التبعيات
+    - name: Install dependencies
+      run: npm install
+
+    # 4. تشغيل الاختبارات
+    - name: Run tests
+      run: npm test
+
+    # 5. بناء المشروع
+    - name: Build project
+      run: npm run build
+package.json{
+  "scripts": {
+    "test": "echo \"Running tests...\" && exit 0", 
+    "build": "echo \"Building project...\" && exit 0"
+  }
+}
+git add .github/workflows/nodejs-build.yml
+git commit -m "Add Node.js CI workflow"
+git push origin main

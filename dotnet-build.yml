@@ -1,0 +1,39 @@
+github/workflows/dotnet-build.ymlname: .NET Core Build and Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. التحقق من المستودع
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # 2. إعداد .NET Core SDK
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v4.0.1
+      with:
+        dotnet-version: '6.0.x'  # يمكنك تغيير الإصدار حسب احتياجك
+
+    # 3. تثبيت التبعيات
+    - name: Restore dependencies
+      run: dotnet restore
+
+    # 4. تجميع المشروع
+    - name: Build the project
+      run: dotnet build --no-restore --configuration Release
+
+    # 5. تشغيل الاختبارات
+    - name: Run tests
+      run: dotnet test --no-restore --verbosity normal
+
+
+github/workflows/dotnet-build.yml.git add .github/workflows/dotnet-build.yml
+git commit -m "Add .NET Core CI workflow"
+git push origin main

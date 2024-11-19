@@ -1,0 +1,48 @@
+cd backend
+npm install jsonwebtoken express fs
+backend/githubAuth.js const fs = require('fs');
+const jwt = require('jsonwebtoken');
+
+// تحميل المفتاح الخاص من ملف pem
+const privateKey = fs.readFileSync('./private-key.pem', 'utf8');
+
+// معرف التطبيق (App ID) الخاص بـ GitHub
+const appId = process.env.GITHUB_APP_ID;
+
+function generateJWT() {
+  const now = Math.floor(Date.now() / 1000); // الوقت الحالي بالثواني
+  const payload = {
+    iat: now,             // وقت الإصدار
+    exp: now + (10 * 60), // انتهاء الصلاحية بعد 10 دقائق
+    iss: appId            // معرف التطبيق (App ID)
+  };
+
+  // توقيع الـ JWT باستخدام المفتاح الخاص
+  return jwt.sign(payload, privateKey, { algorithm: 'RS256' });
+}
+
+module.exports = { generateJWT };
+backend/index.jsrequire('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const { generateJWT } = require('./githubAuth');
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+const MONGODB_URI = process.env.MONGODB_URI;
+
+// الاتصال بقاعدة البيانات
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Database connected'))
+  .catch((err) => console.error('Database connection error:', err));
+
+// مسار API لاختبار JWT
+app.get('/api/github-token', (req, res) => {
+  const jwtToken = generateJWT();
+  res.json({ token: jwtToken });
+});
+
+app.listen(PORT, () => console.log(`Backend running on http://localhost:${PORT}`));
+PORT=3001
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/mydatabase
+GITHUB_APP_ID=your-github-app-id

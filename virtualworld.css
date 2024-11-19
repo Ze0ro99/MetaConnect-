@@ -1,0 +1,18 @@
+.virtual-world {
+  text-align: center;
+  padding: 20px;
+}
+
+.explore-button {
+  background-color: #4a90e2; /* لون الزر */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.explore-button:hover {
+  background-color: #357ab8; /* لون الزر عند التحويم */
+}

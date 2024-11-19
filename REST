@@ -1,0 +1,30 @@
+// استرجاع مفتاح التحقق من متغير البيئة
+const validationKey = process.env.VALIDATION_KEY; // تأكد من إعداد هذا في بيئتك
+
+// دالة لجلب البيانات من واجهة برمجة التطبيقات
+async function fetchData() {
+    try {
+        const response = await fetch('https://api.example.com/data', {
+            method: 'GET', // أو POST حسب الحاجة
+            headers: {
+                'Authorization': `Bearer ${validationKey}`, // تضمين المفتاح في رأس الطلب
+                'Content-Type': 'application/json'
+            }
+        });
+
+        // تحقق من استجابة الشبكة
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json(); // تحليل البيانات المسترجعة
+        return data;
+    } catch (error) {
+        console.error('Error fetching data:', error); // التعامل مع الأخطاء
+    }
+}
+
+// استدعاء الدالة
+fetchData().then(data => {
+    console.log('Fetched data:', data); // عرض البيانات المسترجعة
+});

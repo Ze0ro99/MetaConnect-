@@ -1,0 +1,273 @@
+/MetaConnect
+  ├── /backend
+### 2. ملف `backend/server.js`
+
+```javascript
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv').config();
+
+const app = express();
+app.use(cors({
+    origin: 'http://localhost:3000' // استبدل هذا بالنطاق الصحيح لتطبيقك
+}));
+app.use(express.json());
+
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("MongoDB connected"))
+    .catch(err => console.error("MongoDB connection error:", err));
+
+app.use('/api/transactions', require('./routes/transactions'));
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+MONGO_URI=your_mongodb_connection_string
+PORT=5000  # يمكنك تغيير المنفذ إذا لزم الأمر
+npm install
+  │   ├── /models
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+
+const UserSchema = new mongoose.Schema({
+  username: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  balance: { type: Number, default: 0 },
+  referrals: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+});
+
+// تشفير كلمة المرور قبل حفظ المستخدم
+UserSchema.pre('save', async function(next) {
+  if (!this.isModified('password')) return next();
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
+
+// دالة للتحقق من كلمة المرور
+UserSchema.methods.comparePassword = function(password) {
+  return bcrypt.compare(password, this.password);
+};
+
+module.exports = mongoose.model('User', UserSchema);
+
+  │   │   ├── Transaction.js
+const mongoose = require('mongoose');
+
+const TransactionSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  amount: { type: Number, required: true },
+  type: { type: String, enum: ['deposit', 'withdrawal'], required: true },
+  date: { type: Date, default: Date.now }
+});
+
+module.exports = mongoose.model('Transaction', TransactionSchema);
+
+  │   │   └── User.js
+  │   ├── /routes
+const express = require('express');
+const router = express.Router();
+const Transaction = require('../models/Transaction');
+const User = require('../models/User');
+
+// Deposit route
+router.post('/deposit', async (req, res) => {
+  try {
+    const { userId, amount } = req.body;
+    const newTransaction = new Transaction({ user: userId, amount, type: 'deposit' });
+    await newTransaction.save();
+    await User.findByIdAndUpdate(userId, { $inc: { balance: amount } });
+    res.status(200).json({ message: 'Deposit successful', transaction: newTransaction });
+  } catch (error) {
+    res.status(500).json({ message: 'Error processing deposit', error });
+  }
+});
+
+// Withdrawal route
+router.post('/withdraw', async (req, res) => {
+  try {
+    const { userId, amount } = req.body;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    if (user.balance < amount) {
+      return res.status(400).json({ message: 'Insufficient balance' });
+    }
+    const newTransaction = new Transaction({ user: userId, amount, type: 'withdrawal' });
+    await newTransaction.save();
+    await User.findByIdAndUpdate(userId, { $inc: { balance: -amount } });
+    res.status(200).json({ message: 'Withdrawal successful', transaction: newTransaction });
+  } catch (error) {
+    res.status(500).json({ message: 'Error processing withdrawal', error });
+  }
+});
+
+module.exports = router;
+
+  │   │   └── transactions.js
+  │   ├── server.js
+  │   └── .envREACT_APP_API_URL=http://localhost:5000/api
+
+  ├── /frontend
+  │   ├── /src
+  │   │   ├── /components
+  │   │   │   ├── Header.js
+import React from 'react';
+
+const Header = () => {
+  return (
+    <header>
+      <h1>MetaConnect</h1>
+      {/* Navigation links */}
+    </header>
+  );
+};
+
+export default Header;
+
+  │   │   │   ├── Footer.js
+import React from 'react';
+
+const Footer = () => {
+  return (
+    <footer>
+      <p>© 2024 MetaConnect</p>
+    </footer>
+  );
+};
+
+export default Footer;
+
+  │   │   │   ├── Home.js
+import React from 'react';
+
+const Home = () => {
+  return (
+    <div>
+      <h2>Welcome to MetaConnect!</h2>
+    </div>
+  );
+};
+
+export default Home;
+
+  │   │   │   ├── Profile.j
+simport React from 'react';
+
+const Profile = () => {
+  return (
+    <div>
+      <h2>Your Profile</h2>
+    </div>
+  );
+};
+
+export default Profile;
+
+  │   │   │   └── VirtualWorld.js
+import React from 'react';
+
+const VirtualWorld = () => {
+  return (
+    <div>
+      <h2>Explore the Virtual World</h2>
+    </div>
+  );
+};
+
+export default VirtualWorld;
+
+  │   │   ├── App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Home from './components/Home';
+import Profile from './components/Profile';
+import VirtualWorld from './components/VirtualWorld';
+
+const App = () => {
+  return (
+    <Router>
+      <Header />
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/profile" component={Profile} />
+        <Route path="/virtual-world" component={VirtualWorld} />
+      </Switch>
+      <Footer />
+    </Router>
+  );
+};
+
+export default App;
+
+  │   │   └── index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import './index.css';
+
+ReactDOM.render(<App />, document.getElementById('root'));
+
+  │   ├── package.json
+{mkdir my-nodejs-project
+cd my-nodejs-project
+npm init -y
+nano package.json  # استبدل المحتوى بالمحتوى المقدم أعلاه
+npm install express mongoose dotenv
+npm install --save-dev jest
+git init
+git add package.json package-lock.json
+git commit -m "Initialize project with package.json and dependencies"
+git remote add origin https://github.com/your-username/my-nodejs-project.git
+git push -u origin main
+
+  "name": "your-project-name",        // ضع هنا اسم مشروعك
+  "version": "1.0.0",
+  "description": "A Node.js project with CI/CD using GitHub Actions.",
+  "main": "index.js",                  // اسم الملف الرئيسي لمشروعك
+  "scripts": {
+    "test": "jest",                    // استخدم Jest لتشغيل الاختبارات
+    "build": "echo \"Building project...\" && exit 0", // بناء المشروع
+    "start": "node index.js"           // تشغيل المشروع
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/your-repo.git" // ضع هنا رابط مستودعك
+  },
+  "keywords": [],
+  "author": "Your Name",               // ضع هنا اسمك
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",              // مثال على تبعية
+    "mongoose": "^6.1.0",              // مثال على تبعية أخرى
+    "dotenv": "^10.0.0"                // لتحميل المتغيرات البيئية
+  },
+  "devDependencies": {
+    "jest": "^27.0.0"                  // مكتبة للاختبارات
+  }
+}
+
+   └── .env
+REACT_APP_API_URL=http://localhost:5000/api
+
+  └── README.md# MetaConnect
+
+MetaConnect is an application that integrates the metaverse and virtual reality, supporting various digital payment methods.
+
+## System Requirements
+- Node.js (>= 14.x)
+- MongoDB
+
+## Setup Instructions
+
+### Frontend
+1. Navigate to the `frontend` folder.
+2. Install dependencies:
+   ```bash
+   npm install
+
+npm start
+ nood server.js 

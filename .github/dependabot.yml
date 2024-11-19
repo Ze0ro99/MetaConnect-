@@ -1,0 +1,34 @@
+version: 2
+
+updates:
+  # 1. تحديث التبعيات الخاصة بـ npm في الواجهة الأمامية
+  - package-ecosystem: "npm"  # نظام إدارة الحزم
+    directory: "/frontend"  # مسار ملف package.json
+    schedule:
+      interval: "weekly"  # يتم فحص التحديثات أسبوعيًا
+    open-pull-requests-limit: 5  # حد أقصى لطلبات السحب المفتوحة
+    commit-message:
+      prefix: "fix"  # بادئة رسالة الالتزام
+    ignore:
+      - dependency-name: "some-package"  # استبعاد حزمة معينة من التحديثات
+
+  # 2. تحديث التبعيات الخاصة بـ npm في الواجهة الخلفية
+  - package-ecosystem: "npm"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "fix"
+    ignore:
+      - dependency-name: "some-package"  # استبعاد حزمة معينة من التحديثات
+
+  # 3. مراقبة تبعيات GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"  # يتم فحص التحديثات يوميًا
+    commit-message:
+      prefix: "chore"  # بادئة رسالة الالتزام
+    ignore:
+      - dependency-name: "actions/setup-node"  # استبعاد حزمة معينة من التحديثات

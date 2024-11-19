@@ -1,0 +1,47 @@
+name: Node.js Package
+
+on:
+  release:
+    types: [published]  # تأكد من أن الحدث يشير إلى الإصدار المنشور
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20  # استخدام الإصدار 20 من Node.js
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Run tests
+        run: npm test
+
+  publish-npm:
+    needs: build  # يعتمد على نجاح وظيفة البناء
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        
+      - name: Set up Node.js for Publishing
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+          
+      - name: Install dependencies for publishing
+        run: npm ci
+        
+      - name: Publish package
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}  # تأكد من إضافة هذا السر في إعدادات المستودع
+git add .github/workflows/publish.yaml
+git commit -m "تحديث سير العمل للإصدار"
+git push origin main

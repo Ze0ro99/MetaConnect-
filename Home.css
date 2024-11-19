@@ -1,0 +1,12 @@
+.home {
+  text-align: center;
+  padding: 20px;
+}
+
+.home h2 {
+  color: #4a90e2; /* لون العنوان */
+}
+
+.home p {
+  font-size: 1.2em;
+}

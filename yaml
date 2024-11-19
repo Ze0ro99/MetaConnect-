@@ -1,0 +1,43 @@
+name: CN Terragrunt GitHub Actions Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  example_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run Terraform or Terragrunt actions
+        uses: CloudNation-nl/cn-terragrunt-github-actions@v0.0.16
+        with:
+          tf_actions: # Specify the Terraform or Terragrunt command here
+          tf_actions_binary: terragrunt # Optional, defaults to terragrunt
+          tf_actions_version: # Optional, defaults to latest
+          tg_actions_version: # Optional, defaults to latest
+          tf_actions_cli_credentials_hostname: # Optional, defaults to app.terraform.io
+          tf_actions_cli_credentials_token: # Optional
+          tf_actions_comment: true # Optional, defaults to true
+          tf_actions_working_dir: . # Optional, defaults to current directory
+          tf_actions_fmt_write: # Optional
+
+      - name: Create artifact
+        run: |
+          echo "Creating artifact..."
+          mkdir output
+          echo "Hello, World!" > output/hello.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: output/
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4.1.7
+        with:
+          name: my-artifact

@@ -1,0 +1,43 @@
+name: CN Terragrunt GitHub Actions Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  example_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run Terraform or Terragrunt actions
+        uses: CloudNation-nl/cn-terragrunt-github-actions@v0.0.16
+        with:
+          tf_actions: apply # الأمر الفرعي الذي سيتم تنفيذه
+          tf_actions_binary: terragrunt # يمكن تغييره إلى terraform إذا لزم الأمر
+          tf_actions_version: latest # استخدم أحدث إصدار من Terraform
+          tg_actions_version: latest # استخدم أحدث إصدار من Terragrunt
+          tf_actions_cli_credentials_hostname: app.terraform.io # اسم المضيف لبيانات اعتماد CLI
+          tf_actions_cli_credentials_token: ${{ secrets.TF_CLI_TOKEN }} # رمز بيانات الاعتماد (يجب تخزينه كسر في إعدادات المستودع)
+          tf_actions_comment: true # إضافة تعليق على طلبات السحب
+          tf_actions_working_dir: . # الدليل الحالي
+          tf_actions_fmt_write: true # كتابة تغييرات تنسيق Terragrunt على ملفات المصدر
+
+      - name: Create artifact
+        run: |
+          echo "Creating artifact..."
+          mkdir output
+          echo "Hello, World!" > output/hello.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: output/
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4.1.7
+        with:
+          name: my-artifact

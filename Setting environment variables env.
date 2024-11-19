@@ -1,0 +1,32 @@
+
+.envbackend
+PORT=3001
+PI_API_KEY=your-pi-api-
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/mydatabase
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+FACEBOOK_CLIENT_ID=your-facebook-client-id
+FACEBOOK_CLIENT_SECRET=your-facebook-client-secret
+FRONTEND_URL=http://localhost:3000
+
+The front end -.env is located in the .env file inside the front end folder, use the following:
+
+REACT_APP_BACKEND_URL=http://localhost:3001
+REACT_APP_PI_API_KEY=your-pi-api-key
+backend/piPayments.jsconst { Pi } = require('@pihq/pi-node-sdk');
+
+const pi = Pi.init({ga2iyonowybym9bx57kn4tk1cp9bxq4mavw10hhj67glvov007w2yeltghhjralq
+  apiKey: process.env.PI_API_KEY,
+  sandbox: true, // استخدم وضع التجريب
+});
+
+async function initiatePayment(amount, memo) {
+  try {
+    const payment = await pi.createPayment({ amount, memo });
+    return payment;
+  } catch (error) {
+    console.error('Payment initiation failed:', error);
+  }
+}
+
+module.exports = { initiatePayment };

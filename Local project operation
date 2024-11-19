@@ -1,0 +1,53 @@
+index.jsrequire('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const { initiatePayment } = require('./piPayments');
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+const MONGODB_URI = process.env.MONGODB_URI;
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Database connected'))
+  .catch((err) => console.error('Database connection error:', err));
+
+app.post('/api/pay', async (req, res) => {
+  try {
+    const payment = await initiatePayment(10, 'Test Payment');
+    res.status(200).json(payment);
+  } catch (error) {
+    res.status(500).json({ error: 'Payment failed' });
+  }
+});
+
+app.listen(PORT, () => console.log(`Backend running on http://localhost:${PORT}`));
+Background.
+cd backend
+npm start
+http://localhost:3001
+
+piPayments.js:const { Pi } = require('@pihq/pi-node-sdk');
+
+const pi = Pi.init({
+  apiKey: process.env.PI_API_KEY,5d8bc63cfa473df9a90c3308432e255c892f4b363143dfd8fa98c6c44d1b0bda13b78ce5a9c195b1648220c33a7b4f026b8176c0a0c87ba421c309533a57480c
+  sandbox: true,
+});
+
+async function initiatePayment(amount, memo) {
+  try {
+    const payment = await pi.createPayment({ amount, memo });
+    return payment;
+  } catch (error) {
+    console.error('Payment initiation failed:', error);
+  }
+}
+
+module.exports = { initiatePayment };
+
+
+Front. 
+cd frontend
+npm start
+http://localhost:3000
+
+ 

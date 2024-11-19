@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pi App</title>
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <script>
+    // تهيئة Pi SDK
+    Pi.init({ version: "2.0", sandbox: true });
+
+    // مصادقة المستخدم
+    function authenticateUser() {
+      Pi.authenticate(["username", "wallet_address"], onIncompletePaymentFound)
+        .then(authResult => {
+          console.log("User authenticated:", authResult.user.username);
+        })
+        .catch(err => console.error("Authentication failed:", err));
+    }
+
+    // معالجة المدفوعات
+    function createPayment() {
+      const paymentData = {
+        amount: 3.14,
+        memo: "Purchase Item",
+        metadata: { itemId: "123" },
+      };
+      const paymentCallbacks = {
+        onReadyForServerApproval: paymentId => console.log("Awaiting approval:", paymentId),
+        onReadyForServerCompletion: (paymentId, txid) => console.log("Transaction ready:", txid),
+        onCancel: paymentId => console.log("Payment canceled:", paymentId),
+        onError: (error, payment) => console.error("Payment error:", error),
+      };
+
+      Pi.createPayment(paymentData, paymentCallbacks);
+    }
+
+    // عرض الإعلانات
+    function showAd() {
+      Pi.Ads.showAd("interstitial").then(response => {
+        console.log("Ad status:", response.result);
+      }).catch(error => console.error("Ad error:", error));
+    }
+    
+    // معالجة الدفع غير المكتمل
+    function onIncompletePaymentFound(payment) {
+      console.log("Incomplete payment found:", payment);
+    }
+
+    // استدعاء الوظائف عند تحميل الصفحة
+    window.onload = () => {
+      authenticateUser();
+    };
+  </script>
+</head>
+<body>
+  <h1>Welcome to Pi App</h1>
+  <button onclick="createPayment()">Create Payment</button>
+  <button onclick="showAd()">Show Ad</button>
+</body>
+</html>

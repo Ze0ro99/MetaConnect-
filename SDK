@@ -1,0 +1,77 @@
+SDk
+npm install @pihq/pi-web-sdk
+https://github.com/pi-apps/pi-platform-docs.git
+// frontend/hooks/usePi.js
+import { Pi } from '@pihq/pi-web-sdk';
+
+const pi = Pi.init({
+  version: '2.0',
+  sandbox: true,  // استخدم true للتجريب
+});
+
+export const loginWithPi = async () => {
+  try {
+    const authResult = await pi.authenticate({
+      onIncompletePaymentFound: (payment) => {
+        console.log('Incomplete payment found:', payment);
+      },
+    });
+    console.log('User authenticated:', authResult);
+    return authResult.user;
+  } catch (error) {
+    console.error('Authentication failed:', error);
+  }
+};
+
+============
+// frontend/components/PiLoginButton.js
+import { loginWithPi } from '../hooks/usePi';
+
+export default function PiLoginButton() {
+  const handleLogin = async () => {
+    const user = await loginWithPi();
+    if (user) {
+      alert(`Welcome, ${user.username}!`);
+    }
+  };
+
+  return <button onClick={handleLogin}>Login with Pi</button>;
+}
+
+###############
+// frontend/hooks/usePi.js
+export const initiatePiPayment = async (amount, memo) => {
+  try {
+    const payment = await pi.createPayment({
+      amount,
+      memo,
+      metadata: { orderId: '1234' },
+    });
+
+    console.log('Payment initiated:', payment);
+
+    payment.onCompleted(() => {
+      alert('Payment completed successfully!');
+    });
+
+    payment.onError((error) => {
+      console.error('Payment failed:', error);
+    });
+  } catch (error) {
+    console.error('Error initiating payment:', error);
+  }
+};
+
+############
+// frontend/components/PiPaymentButton.js
+import { initiatePiPayment } from '../hooks/usePi';whsec_iHmhNt3Mx68bV9cAFZPDmz5wguPiSgj9
+
+export default function PiPaymentButton() {
+  const handlePayment = () => {
+    initiatePiPayment(10, 'Payment for NFT');
+  };
+
+  return <button onClick={handlePayment}>Pay with Pi</button>;
+}
+
+##########
