@@ -14,13 +14,13 @@
     "metaverse",
     "pi network"
   ],
-  "author": "Your Name", // استبدل باسمك
+  "author": "Ze0ro99",
   "license": "MIT",
   "dependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.3.0",
-    "axios": "^0.21.1" // استخدم Axios للتعامل مع الطلبات HTTP
+    "axios": "^0.21.1"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
@@ -28,8 +28,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Ze0ro99/metaconnect.git" // استبدل برابط مستودعك
+    "url": "https://github.com/Ze0ro99/metaconnect.git"
   }
 }
-npm install 
-npm start 
