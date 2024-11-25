@@ -8,27 +8,27 @@ updates:
       interval: "weekly"  # يتم فحص التحديثات أسبوعيًا
     open-pull-requests-limit: 5  # حد أقصى لطلبات السحب المفتوحة
     commit-message:
-      prefix: "fix"  # بادئة رسالة الالتزام
+      prefix: "fix"  # بادئة رسالة الالتزام لتحسين التبعيات
     ignore:
       - dependency-name: "some-package"  # استبعاد حزمة معينة من التحديثات
 
   # 2. تحديث التبعيات الخاصة بـ npm في الواجهة الخلفية
   - package-ecosystem: "npm"
-    directory: "/backend"
+    directory: "/backend"  # مسار ملف package.json في الواجهة الخلفية
     schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
+      interval: "weekly"  # يتم فحص التحديثات أسبوعيًا
+    open-pull-requests-limit: 5  # حد أقصى لطلبات السحب المفتوحة
     commit-message:
-      prefix: "fix"
+      prefix: "fix"  # بادئة رسالة الالتزام لتحسين التبعيات
     ignore:
       - dependency-name: "some-package"  # استبعاد حزمة معينة من التحديثات
 
   # 3. مراقبة تبعيات GitHub Actions
   - package-ecosystem: "github-actions"
-    directory: "/"
+    directory: "/"  # المسار الأساسي لمراقبة تبعيات GitHub Actions
     schedule:
       interval: "daily"  # يتم فحص التحديثات يوميًا
     commit-message:
-      prefix: "chore"  # بادئة رسالة الالتزام
+      prefix: "chore"  # بادئة رسالة الالتزام لعمليات الصيانة
     ignore:
       - dependency-name: "actions/setup-node"  # استبعاد حزمة معينة من التحديثات
