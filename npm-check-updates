@@ -1,0 +1,2 @@
+npm install npm-check-updates --save-dev
+npm run update
