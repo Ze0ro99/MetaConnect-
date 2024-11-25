@@ -21,9 +21,9 @@
     // معالجة المدفوعات
     function createPayment() {
       const paymentData = {
-        amount: 3.14,
-        memo: "Purchase Item",
-        metadata: { itemId: "123" },
+        amount: 3.14, // المبلغ المراد دفعه
+        memo: "Purchase Item", // ملاحظة للمعاملة
+        metadata: { itemId: "123" }, // بيانات إضافية عن المعاملة
       };
       const paymentCallbacks = {
         onReadyForServerApproval: paymentId => console.log("Awaiting approval:", paymentId),
@@ -41,7 +41,7 @@
         console.log("Ad status:", response.result);
       }).catch(error => console.error("Ad error:", error));
     }
-    
+
     // معالجة الدفع غير المكتمل
     function onIncompletePaymentFound(payment) {
       console.log("Incomplete payment found:", payment);
