@@ -1,0 +1,13 @@
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
+export default function HomePage() {
+  return (
+    <div>
+      <h1>مرحباً بكم في صفحتي الرئيسية!</h1>
+      <SpeedInsights
+        url="https://your-website-url.com"
+        //npm i @vercel/speed-insights يمكنك إضافة خيارات إضافية هنا
+      />
+    </div>
+  );
+}
