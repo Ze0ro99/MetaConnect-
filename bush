@@ -1,0 +1,8 @@
+# استنساخ المستودع
+git clone -b main https://github.com/Ze0ro99/MetaConnect.git
+
+# الانتقال إلى مجلد المشروع
+cd MetaConnect
+
+# التحقق من commit المحدد
+git checkout 8e7bb17
