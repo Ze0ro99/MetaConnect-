@@ -1,0 +1,19 @@
+echo '#!/bin/bash
+
+# تحديث جميع الفروع
+git fetch --all
+
+# الانتقال إلى كل فرع وتحديثه
+for branch in $(git branch | sed "s/..//"); do
+    echo "تحديث الفرع: $branch"
+    git checkout $branch
+    git pull origin $branch
+done
+
+# العودة إلى الفرع الرئيسي
+git checkout main
+
+# تنظيف المستودع من الفروع غير المستخدمة
+git remote prune origin
+
+echo "تم تحديث جميع الفروع بنجاح!"' > update_branches.sh && chmod +x update_branches.sh && ./update_branches.sh
