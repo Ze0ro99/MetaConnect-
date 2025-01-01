@@ -16,3 +16,4 @@
     "@babel/eslint-parser": "^7.0.0"  // استخدام المحلل الجديد
   }
 }
+npm install eslint@latest @babel/eslint-parser@latest
