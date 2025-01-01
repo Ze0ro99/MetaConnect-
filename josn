@@ -1,19 +1,37 @@
 {
-  "name": "MetaConnect",
+  "name": MetaConnect",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "next": "^13.0.0",  // تأكد من تحديث الإصدار
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "next": "^13.0.0", // تأكد من استخدام الإصدار المناسب
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
-    "eslint": "^8.0.0",  // تحديث ESLint
-    "@babel/eslint-parser": "^7.0.0"  // استخدام المحلل الجديد
+    "eslint": "^8.0.0", // تأكد من استخدام الإصدار المناسب
+    "eslint-config-next": "^13.0.0" // تأكد من استخدام الإصدار المناسب
+  },
+  "eslintConfig": {
+    "extends": "next/core-web-vitals"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
+
 npm install eslint@latest @babel/eslint-parser@latest
