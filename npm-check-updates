@@ -1,2 +1,3 @@
-npm install npm-check-updates --save-dev
-npm run update
+npm install -g npm-check-updates
+ncu -u
+npm install
