@@ -6,10 +6,79 @@ MetaConnect is an application that integrates the metaverse and virtual reality,
 - Node.js (>= 14.x)
 - MongoDB
 
+## Project Structure
+```
+MetaConnect/
+├── backend/
+│   ├── models/
+│   │   ├── User.js
+│   │   └── Transaction.js
+│   ├── routes/
+│   │   └── transactions.js
+│   ├── server.js
+│   └── .env
+├── frontend/
+│   ├── package.json
+│   ├── next.config.js
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Header.js
+│   │   │   ├── Footer.js
+│   │   ├── pages/
+│   │   │   ├── index.js
+│   │   │   └── profile.js
+│   │   └── styles/
+│   │       └── globals.css
+└── README.md
+```
+
 ## Setup Instructions
 
 ### Backend
-1. Navigate to the `backend` folder.
+1. Navigate to the `backend` folder:
+   ```bash
+   cd backend
+   ```
 2. Install dependencies:
    ```bash
    npm install express mongoose dotenv cors bcrypt
+   ```
+3. Create a `.env` file with your MongoDB connection string:
+   ```
+   MONGO_URI=your_mongodb_connection_string
+   PORT=5000
+   ```
+4. Start the server:
+   ```bash
+   npm start
+   ```
+
+### Frontend
+1. Navigate to the `frontend` folder:
+   ```bash
+   cd frontend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## API Endpoints
+
+### Transactions
+- **POST /api/transactions/deposit**
+  - Request Body: `{ "userId": "user_id", "amount": amount }`
+  - Description: Process a deposit transaction.
+
+- **POST /api/transactions/withdraw**
+  - Request Body: `{ "userId": "user_id", "amount": amount }`
+  - Description: Process a withdrawal transaction.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+```
