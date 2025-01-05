@@ -1,0 +1,25 @@
+const LRU = require("lru-cache");
+
+// إعداد الكاش
+const options = {
+  max: 500, // الحد الأقصى لعدد العناصر في الكاش
+  maxAge: 1000 * 60 * 60 // الحد الأقصى لعمر العناصر (1 ساعة)
+};
+
+const cache = new LRU(options);
+
+// إضافة عنصر إلى الكاش
+cache.set("key1", "value1");
+
+// استرجاع عنصر من الكاش
+const value = cache.get("key1");
+console.log(value); // "value1"
+
+// التحقق من وجود العنصر
+console.log(cache.has("key1")); // true
+
+// حذف عنصر من الكاش
+cache.del("key1");
+
+// التحقق من وجود العنصر بعد الحذف
+console.log(cache.has("key1")); // false
