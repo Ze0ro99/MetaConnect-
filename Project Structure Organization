@@ -1,8 +1,11 @@
-/MetaConnect
-  ├── /backend
-### 2. ملف `backend/server.js`
+# إنشاء المجلدات الأساسية
+mkdir -p MetaConnect/backend/models MetaConnect/backend/routes MetaConnect/frontend/src/components MetaConnect/frontend/pages MetaConnect/frontend/styles
 
-```javascript
+# إنشاء ملف .env في backend
+echo -e "MONGO_URI=your_mongodb_connection_string\nPORT=5000" > MetaConnect/backend/.env
+
+# إنشاء ملف server.js في backend
+cat <<EOL > MetaConnect/backend/server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -21,11 +24,11 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 app.use('/api/transactions', require('./routes/transactions'));
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-MONGO_URI=your_mongodb_connection_string
-PORT=5000  # يمكنك تغيير المنفذ إذا لزم الأمر
-npm install
-  │   ├── /models
+app.listen(PORT, () => console.log(\`Server running on port \${PORT}\`));
+EOL
+
+# إنشاء ملف User.js في backend/models
+cat <<EOL > MetaConnect/backend/models/User.js
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
@@ -50,8 +53,10 @@ UserSchema.methods.comparePassword = function(password) {
 };
 
 module.exports = mongoose.model('User', UserSchema);
+EOL
 
-  │   │   ├── Transaction.js
+# إنشاء ملف Transaction.js في backend/models
+cat <<EOL > MetaConnect/backend/models/Transaction.js
 const mongoose = require('mongoose');
 
 const TransactionSchema = new mongoose.Schema({
@@ -62,9 +67,10 @@ const TransactionSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Transaction', TransactionSchema);
+EOL
 
-  │   │   └── User.js
-  │   ├── /routes
+# إنشاء ملف transactions.js في backend/routes
+cat <<EOL > MetaConnect/backend/routes/transactions.js
 const express = require('express');
 const router = express.Router();
 const Transaction = require('../models/Transaction');
@@ -76,7 +82,7 @@ router.post('/deposit', async (req, res) => {
     const { userId, amount } = req.body;
     const newTransaction = new Transaction({ user: userId, amount, type: 'deposit' });
     await newTransaction.save();
-    await User.findByIdAndUpdate(userId, { $inc: { balance: amount } });
+    await User.findByIdAndUpdate(userId, { \$inc: { balance: amount } });
     res.status(200).json({ message: 'Deposit successful', transaction: newTransaction });
   } catch (error) {
     res.status(500).json({ message: 'Error processing deposit', error });
@@ -96,7 +102,7 @@ router.post('/withdraw', async (req, res) => {
     }
     const newTransaction = new Transaction({ user: userId, amount, type: 'withdrawal' });
     await newTransaction.save();
-    await User.findByIdAndUpdate(userId, { $inc: { balance: -amount } });
+    await User.findByIdAndUpdate(userId, { \$inc: { balance: -amount } });
     res.status(200).json({ message: 'Withdrawal successful', transaction: newTransaction });
   } catch (error) {
     res.status(500).json({ message: 'Error processing withdrawal', error });
@@ -104,15 +110,93 @@ router.post('/withdraw', async (req, res) => {
 });
 
 module.exports = router;
+EOL
 
-  │   │   └── transactions.js
-  │   ├── server.js
-  │   └── .envREACT_APP_API_URL=http://localhost:5000/api
+# إنشاء package.json في backend
+cat <<EOL > MetaConnect/backend/package.json
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for MetaConnect",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^6.1.0",
+    "dotenv": "^10.0.0",
+    "cors": "^2.8.5",
+    "bcrypt": "^5.0.1"
+  }
+}
+EOL
 
-  ├── /frontend
-  │   ├── /src
-  │   │   ├── /components
-  │   │   │   ├── Header.js
+# إنشاء package.json في frontend
+cat <<EOL > MetaConnect/frontend/package.json
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "Frontend for MetaConnect",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
+EOL
+
+# إنشاء ملف next.config.js في frontend
+cat <<EOL > MetaConnect/frontend/next.config.js
+module.exports = {
+  reactStrictMode: true,
+};
+EOL
+
+# إنشاء ملف index.js في frontend/pages
+cat <<EOL > MetaConnect/frontend/pages/index.js
+import Header from '../src/components/Header';
+import Footer from '../src/components/Footer';
+
+const Home = () => {
+  return (
+    <div>
+      <Header />
+      <h2>Welcome to MetaConnect!</h2>
+      <Footer />
+    </div>
+  );
+};
+
+export default Home;
+EOL
+
+# إنشاء ملف profile.js في frontend/pages
+cat <<EOL > MetaConnect/frontend/pages/profile.js
+import Header from '../src/components/Header';
+import Footer from '../src/components/Footer';
+
+const Profile = () => {
+  return (
+    <div>
+      <Header />
+      <h2>Your Profile</h2>
+      <Footer />
+    </div>
+  );
+};
+
+export default Profile;
+EOL
+
+# إنشاء ملف Header.js في frontend/src/components
+cat <<EOL > MetaConnect/frontend/src/components/Header.js
 import React from 'react';
 
 const Header = () => {
@@ -125,8 +209,10 @@ const Header = () => {
 };
 
 export default Header;
+EOL
 
-  │   │   │   ├── Footer.js
+# إنشاء ملف Footer.js في frontend/src/components
+cat <<EOL > MetaConnect/frontend/src/components/Footer.js
 import React from 'react';
 
 const Footer = () => {
@@ -138,122 +224,14 @@ const Footer = () => {
 };
 
 export default Footer;
+EOL
 
-  │   │   │   ├── Home.js
-import React from 'react';
+# إنشاء ملف globals.css في frontend/src/styles
+echo -e "/* Global styles here */" > MetaConnect/frontend/src/styles/globals.css
 
-const Home = () => {
-  return (
-    <div>
-      <h2>Welcome to MetaConnect!</h2>
-    </div>
-  );
-};
-
-export default Home;
-
-  │   │   │   ├── Profile.j
-simport React from 'react';
-
-const Profile = () => {
-  return (
-    <div>
-      <h2>Your Profile</h2>
-    </div>
-  );
-};
-
-export default Profile;
-
-  │   │   │   └── VirtualWorld.js
-import React from 'react';
-
-const VirtualWorld = () => {
-  return (
-    <div>
-      <h2>Explore the Virtual World</h2>
-    </div>
-  );
-};
-
-export default VirtualWorld;
-
-  │   │   ├── App.js
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Home from './components/Home';
-import Profile from './components/Profile';
-import VirtualWorld from './components/VirtualWorld';
-
-const App = () => {
-  return (
-    <Router>
-      <Header />
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/virtual-world" component={VirtualWorld} />
-      </Switch>
-      <Footer />
-    </Router>
-  );
-};
-
-export default App;
-
-  │   │   └── index.js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import './index.css';
-
-ReactDOM.render(<App />, document.getElementById('root'));
-
-  │   ├── package.json
-{mkdir my-nodejs-project
-cd my-nodejs-project
-npm init -y
-nano package.json  # استبدل المحتوى بالمحتوى المقدم أعلاه
-npm install express mongoose dotenv
-npm install --save-dev jest
-git init
-git add package.json package-lock.json
-git commit -m "Initialize project with package.json and dependencies"
-git remote add origin https://github.com/your-username/my-nodejs-project.git
-git push -u origin main
-
-  "name": "your-project-name",        // ضع هنا اسم مشروعك
-  "version": "1.0.0",
-  "description": "A Node.js project with CI/CD using GitHub Actions.",
-  "main": "index.js",                  // اسم الملف الرئيسي لمشروعك
-  "scripts": {
-    "test": "jest",                    // استخدم Jest لتشغيل الاختبارات
-    "build": "echo \"Building project...\" && exit 0", // بناء المشروع
-    "start": "node index.js"           // تشغيل المشروع
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/your-username/your-repo.git" // ضع هنا رابط مستودعك
-  },
-  "keywords": [],
-  "author": "Your Name",               // ضع هنا اسمك
-  "license": "MIT",
-  "dependencies": {
-    "express": "^4.18.2",              // مثال على تبعية
-    "mongoose": "^6.1.0",              // مثال على تبعية أخرى
-    "dotenv": "^10.0.0"                // لتحميل المتغيرات البيئية
-  },
-  "devDependencies": {
-    "jest": "^27.0.0"                  // مكتبة للاختبارات
-  }
-}
-
-   └── .env
-REACT_APP_API_URL=http://localhost:5000/api
-
-  └── README.md# MetaConnect
+# إنشاء README.md
+cat <<EOL > MetaConnect/README.md
+# MetaConnect
 
 MetaConnect is an application that integrates the metaverse and virtual reality, supporting various digital payment methods.
 
@@ -263,11 +241,29 @@ MetaConnect is an application that integrates the metaverse and virtual reality,
 
 ## Setup Instructions
 
-### Frontend
-1. Navigate to the `frontend` folder.
+### Backend
+1. Navigate to the \`backend\` folder.
 2. Install dependencies:
-   ```bash
-   npm install
+   \`\`\`bash
+   npm install express mongoose dotenv cors bcrypt
+   \`\`\`
+3. Create a \`.env\` file with your MongoDB connection string.
+4. Start the server:
+   \`\`\`bash
+   npm start
+   \`\`\`
 
-npm start
- nood server.js 
+### Frontend
+1. Navigate to the \`frontend\` folder.
+2. Install dependencies:
+   \`\`\`bash
+   npm install
+   \`\`\`
+3. Start the development server:
+   \`\`\`bash
+   npm run dev
+   \`\`\`
+EOL
+
+# طباعة رسالة نجاح
+echo "Project MetaConnect has been created successfully!"
