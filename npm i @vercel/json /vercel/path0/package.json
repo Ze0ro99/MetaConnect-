@@ -8,11 +8,13 @@
     "build": "next build",
     "dev": "next dev",
     "start": "next start"
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "next": "^13.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+    "rimraf": "^4.0.0",
   },
   "devDependencies": {
     "eslint": "^8.42.0",
