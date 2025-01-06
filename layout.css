@@ -1,0 +1,18 @@
+/* أنماط التخطيط العامة */
+.header {
+  background-color: #333;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.footer {
+  background-color: #333;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.main {
+  padding: 20px;
+}
