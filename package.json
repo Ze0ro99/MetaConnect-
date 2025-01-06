@@ -20,7 +20,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
-    "axios": "^0.27.0"
+    "axios": "^1.7.9"
   },
   "devDependencies": {
     "eslint": "^8.40.0",
