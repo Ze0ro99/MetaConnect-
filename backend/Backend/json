@@ -14,7 +14,7 @@
     "next": "^13.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
-    "lru-cache": "^7.15.0"
+    "lru-cache": "^7.15.0",
   },
   "devDependencies": {
     "rimraf": "^4.0.0",
@@ -23,7 +23,7 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "babel-eslint": "^10.1.0"
+    "babel-eslint": "^10.1.0",
   },
   "eslintConfig": {
     "extends": [
@@ -71,7 +71,7 @@
     "مجتمعات عبر الإنترنت",
     "تطبيقات تفاعلية",
     "التقنية الحديثة",
-    "ابتكار تقني"
+    "ابتكار تقني",
   ],
   "author": "Ze0ro99",
   "license": "MIT"
