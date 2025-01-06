@@ -1,5 +1,4 @@
 name: Static Site CI
-
 on:
   push:
     branches:
@@ -7,28 +6,22 @@ on:
   pull_request:
     branches:
       - main
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out code
-        uses: actions/checkout@v3  # تحديث الإصدار إلى v3
-
+        uses: actions/checkout@v2
       - name: Set up Node.js
-        uses: actions/setup-node@v3  # تحديث الإصدار إلى v3
+        uses: actions/setup-node@v2
         with:
           node-version: '20'  # يمكنك استبدال الإصدار حسب الحاجة
-
       - name: Install dependencies
         run: npm install
-
       - name: Build
         run: npm run build
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4  # تحديث الإصدار إلى v4
+        name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
