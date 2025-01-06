@@ -1,21 +1,23 @@
 {
-  "name": MetaConnect",
+  "name": "MetaConnect",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "clean": "rimraf .next"  // سكربت لحذف مجلد .next
   },
   "dependencies": {
-    "next": "^13.0.0", // تأكد من استخدام الإصدار المناسب
+    "next": "^13.0.0",  // تأكد من استخدام الإصدار المناسب
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "rimraf": "^4.0.0"  // إصدار rimraf، تأكد من استخدام الإصدار المناسب
   },
   "devDependencies": {
-    "eslint": "^8.0.0", // تأكد من استخدام الإصدار المناسب
-    "eslint-config-next": "^13.0.0" // تأكد من استخدام الإصدار المناسب
+    "eslint": "^8.0.0",  // تأكد من استخدام الإصدار المناسب
+    "eslint-config-next": "^13.0.0"  // تأكد من استخدام الإصدار المناسب
   },
   "eslintConfig": {
     "extends": "next/core-web-vitals"
@@ -33,5 +35,3 @@
     ]
   }
 }
-
-npm install eslint@latest @babel/eslint-parser@latest
