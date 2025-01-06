@@ -1,0 +1,20 @@
+import React from 'react';
+import './App.css';
+import Connect from './Connect';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react'; // تأكد من استخدام المسار الصحيح
+
+function App() {
+  return (
+    <div className="App">
+      <Connect />
+      <Analytics />
+      <SpeedInsights
+        projectId="prj_NbU1ZgA8wSsHmUjsPBQsYZoD224g" // استبدل بـ ID المشروع الخاص بك
+        // يمكنك إضافة المزيد من الخيارات هنا إذا لزم الأمر
+      />
+    </div>
+  );
+}
+
+export default App;
