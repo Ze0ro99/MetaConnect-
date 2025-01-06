@@ -1,0 +1,23 @@
+/* أنماط للزر */
+.button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #0070f3;
+  color: white;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #005bb5;
+}
+
+/* أنماط للقوائم */
+.nav {
+  list-style: none;
+  display: flex;
+}
+
+.nav-item {
+  margin-right: 20px;
+}
