@@ -4,7 +4,7 @@
   "lockfileVersion": 1,
   "dependencies": {
     "express": {
-      "version": "4.18.2",  // تم تحديث الإصدار
+      "version": "4.18.2",
       "resolved": "https://registry.npmjs.org/express/-/express-4.18.2.tgz",
       "integrity": "sha512-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
       "dev": false,
@@ -32,13 +32,13 @@
       }
     },
     "mongoose": {
-      "version": "6.11.3",  
+      "version": "6.11.3",
       "resolved": "https://registry.npmjs.org/mongoose/-/mongoose-6.11.3.tgz",
       "integrity": "sha512-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
       "dev": false,
       "dependencies": {
         "bson": "1.1.1",
-        "mongodb": "6.13.5",
+        "mongodb": "4.3.4",
         "mongoskin": "1.4.1",
         "mpromise": "0.5.0",
         "mquery": "3.2.3",
