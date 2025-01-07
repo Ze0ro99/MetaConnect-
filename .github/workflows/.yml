@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Run Terraform or Terragrunt actions
         uses: CloudNation-nl/cn-terragrunt-github-actions@v0.0.16
@@ -32,7 +32,7 @@ jobs:
           echo "Hello, World!" > output/hello.txt
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: my-artifact
           path: output/
