@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# إعداد المتغيرات
+REPO_URL="https://github.com/Ze0ro99/MetaConnect-"
+LOCAL_DIR="MetaConnect"
+
+# استنساخ المستودع إذا لم يكن موجودًا
+if [ ! -d "$LOCAL_DIR" ]; then
+  git clone "$REPO_URL" "$LOCAL_DIR"
+fi
+
+cd "$LOCAL_DIR" || exit
+
+# استرجاع قائمة الفروع من المستودع
+BRANCHES=$(git branch -r | grep -v '\->' | sed 's/origin\///')
+
+# حلقة لتكرار الفروع
+for BRANCH in $BRANCHES; do
+  echo "Processing branch: $BRANCH"
+  
+  # سحب آخر التحديثات من الفرع المحدد
+  git checkout "$BRANCH"
+  
+  # محاولة السحب مع معالجة الأخطاء
+  if git pull origin "$BRANCH"; then
+    echo "Successfully pulled updates for branch: $BRANCH"
+    
+    # نقل الملفات المطلوبة (تعديل المسارات حسب الحاجة)
+    cp -r /path/to/source/* ./path/to/destination/
+
+    # إضافة الملفات إلى Git
+    git add .
+
+    # التحقق من وجود تغييرات
+    if ! git diff --cached --quiet; then
+      git commit -m "تحديث الملفات والمكتبات في الفرع $BRANCH"
+      git push origin "$BRANCH"
+    else
+      echo "لا توجد تغييرات جديدة للإرسال في الفرع $BRANCH."
+    fi
+  else
+    echo "فشل السحب من الفرع: $BRANCH. الانتقال إلى الفرع التالي."
+  fi
+done
