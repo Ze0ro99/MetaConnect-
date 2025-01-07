@@ -5,12 +5,10 @@ on:
     branches:
       - main
       - develop
-      - '*'
   pull_request:
     branches:
       - main
       - develop
-      - '*'
 
 jobs:
   build:
@@ -23,16 +21,21 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '14'  # يمكنك تغيير الإصدار حسب الحاجة
+        node-version: '20'  # أو أي إصدار تفضله
 
     - name: Install dependencies
       run: npm install
 
-    - name: Run tests (إذا كنت تستخدم اختبار)
-      run: npm test  # تأكد من وجود اختبار في package.json
+    - name: Run tests
+      run: npm test  # تأكد من وجود اختبارات في package.json
 
-    - name: Build project (إذا كان لديك خطوة بناء)
+    - name: Build project
       run: npm run build  # تأكد من وجود سكربت البناء في package.json
 
-    - name: Deploy (يمكنك إضافة خطوات للنشر هنا)
-      run: echo "Deploying your application..."  # استبدل هذا بخطوات النشر الفعلية
+    - name: Deploy
+      run: echo "Deploying your application..."  # يمكنك استبداله بخطوات النشر الفعلية
+git init  # إذا لم تقم بتهيئة المستودع بعد
+git add package.json package-lock.json .github
+git commit -m "Initial commit with dependencies and CI/CD setup"
+git remote add origin https://github.com/Ze0ro99/MetaConnect.git  # استبدل بـ URL المستودع الخاص بك
+git push -u origin main
