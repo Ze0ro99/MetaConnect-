@@ -38,7 +38,7 @@
       "dev": false,
       "dependencies": {
         "bson": "1.1.1",
-        "mongodb": "4.3.4",
+        "mongodb": "6.13.5",
         "mongoskin": "1.4.1",
         "mpromise": "0.5.0",
         "mquery": "3.2.3",
