@@ -1,0 +1,51 @@
+{
+  "name": "metaconnect",
+  "version": "1.0.0",
+  "lockfileVersion": 1,
+  "dependencies": {
+    "express": {
+      "version": "4.17.1",
+      "resolved": "https://registry.npmjs.org/express/-/express-4.17.1.tgz",
+      "integrity": "sha512-NG3cF5h5F0Z8m7X1Hf0QF1s5D7VhYfW5O8oB8S3A7hT8fW1H3g1xM3a/Zi3HnDTeOrz5k1G5lJ7Wf4tG8T3GQ==",
+      "dev": false,
+      "dependencies": {
+        "accepts": "~1.3.7",
+        "array-flatten": "1.1.1",
+        "body-parser": "1.19.0",
+        "cookie": "0.4.1",
+        "cookie-signature": "1.0.6",
+        "debug": "2.6.9",
+        "depd": "1.1.2",
+        "express-session": "1.17.1",
+        "finalhandler": "1.1.1",
+        "merge-descriptors": "1.0.1",
+        "method-override": "2.3.10",
+        "on-finished": "2.3.0",
+        "parseurl": "~1.3.3",
+        "path-to-regexp": "~0.1.7",
+        "qs": "6.9.6",
+        "range-parser": "~1.2.1",
+        "send": "0.17.1",
+        "serve-static": "1.14.1",
+        "type-is": "~1.6.18",
+        "utils-merge": "1.0.1"
+      }
+    },
+    "mongoose": {
+      "version": "5.10.9",
+      "resolved": "https://registry.npmjs.org/mongoose/-/mongoose-5.10.9.tgz",
+      "integrity": "sha512-5sPqk7qTzQxVxjbU5D5P1a6c1U4Yqe0QGmK2k7r+9Us+7V4u3qU5W6z5E8e7y5Hh5yP7a5K3m8hB1n7Wc4FlPQ==",
+      "dev": false,
+      "dependencies": {
+        "bson": "1.1.1",
+        "mongodb": "3.6.4",
+        "mongoskin": "1.4.1",
+        "mpromise": "0.5.0",
+        "mquery": "3.2.3",
+        "mutils": "1.0.0",
+        "kareem": "2.3.1",
+        "mongoose-legacy-pluralize": "1.0.2"
+      }
+    }
+  }
+}
