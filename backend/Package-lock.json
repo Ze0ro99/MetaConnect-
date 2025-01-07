@@ -5,7 +5,7 @@
   "dependencies": {
     "express": {
       "version": "4.20.0",
-      "resolved": "https://registry.npmjs.org/express/-/express-4.18.2.tgz",
+      "resolved": "https://registry.npmjs.org/express/-/express-4.20.0.tgz",
       "integrity": "sha512-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
       "dev": false,
       "dependencies": {
