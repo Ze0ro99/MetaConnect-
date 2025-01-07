@@ -1,0 +1,38 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - '*'
+  pull_request:
+    branches:
+      - main
+      - develop
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # يمكنك تغيير الإصدار حسب الحاجة
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests (إذا كنت تستخدم اختبار)
+      run: npm test  # تأكد من وجود اختبار في package.json
+
+    - name: Build project (إذا كان لديك خطوة بناء)
+      run: npm run build  # تأكد من وجود سكربت البناء في package.json
+
+    - name: Deploy (يمكنك إضافة خطوات للنشر هنا)
+      run: echo "Deploying your application..."  # استبدل هذا بخطوات النشر الفعلية
