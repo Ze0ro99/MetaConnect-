@@ -1,0 +1,12 @@
+my-app/
+├── src/
+│   ├── components/
+│   │   ├── Header.js
+│   │   ├── Footer.js
+│   │   ├── Home.js
+│   │   ├── Profile.js
+│   │   └── VirtualWorld.js
+│   ├── App.js
+│   └── index.js
+├── package.json
+└── ...
