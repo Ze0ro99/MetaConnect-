@@ -1,0 +1,14 @@
+# Recreating the validation-key.txt file for the Demo App after state reset.
+validation_key_content = """5d8bc63cfa473df9a90c3308432e255c892f4b363143dfd8fa98c6c44d1b0bda13b78ce5a9c195b1648220c33a7b4f026b8176c0a0c87ba421c309533a57480c"""
+
+# Specifying the path to the public directory
+directory_path = "public"  # Use the 'public' directory in your project
+file_name = "validation-key.txt"
+file_path = f"{directory_path}/{file_name}"
+
+# Saving the file
+with open(file_path, "w") as file:
+    file.write(validation_key_content)
+
+# Returning the file path
+file_path
