@@ -1,61 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pi App</title>
-  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-  <script>
-    // تهيئة Pi SDK
-    Pi.init({ version: "2.0", sandbox: true });
-
-    // مصادقة المستخدم
-    function authenticateUser() {
-      Pi.authenticate(["username", "wallet_address"], onIncompletePaymentFound)
-        .then(authResult => {
-          console.log("User authenticated:", authResult.user.username);
-        })
-        .catch(err => console.error("Authentication failed:", err));
-    }
-
-    // معالجة المدفوعات
-    function createPayment() {
-      const paymentData = {
-        amount: 3.14, // المبلغ المراد دفعه
-        memo: "Purchase Item", // ملاحظة للمعاملة
-        metadata: { itemId: "123" }, // بيانات إضافية عن المعاملة
-      };
-      const paymentCallbacks = {
-        onReadyForServerApproval: paymentId => console.log("Awaiting approval:", paymentId),
-        onReadyForServerCompletion: (paymentId, txid) => console.log("Transaction ready:", txid),
-        onCancel: paymentId => console.log("Payment canceled:", paymentId),
-        onError: (error, payment) => console.error("Payment error:", error),
-      };
-
-      Pi.createPayment(paymentData, paymentCallbacks);
-    }
-
-    // عرض الإعلانات
-    function showAd() {
-      Pi.Ads.showAd("interstitial").then(response => {
-        console.log("Ad status:", response.result);
-      }).catch(error => console.error("Ad error:", error));
-    }
-
-    // معالجة الدفع غير المكتمل
-    function onIncompletePaymentFound(payment) {
-      console.log("Incomplete payment found:", payment);
-    }
-
-    // استدعاء الوظائف عند تحميل الصفحة
-    window.onload = () => {
-      authenticateUser();
-    };
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Third-party App Consent</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-  <h1>Welcome to Pi App</h1>
-  <button onclick="createPayment()">Create Payment</button>
-  <button onclick="showAd()">Show Ad</button>
+
+    <h1>Third-party App Consent</h1>
+    <p><strong>MetaConnect</strong> is a third-party app on Pi. You’ve consented for Pi to share your data with this application.</p>
+    <p><strong>Important Note</strong>: Pi Network does NOT save any data unrelated to Pi that you decide to share with any third-party apps (e.g., location).</p>
+
+    <h2>Privacy Policy and Terms of Service</h2>
+    <p>Before proceeding with your consent to share data and personal information with this third-party app, Pi Network recommends you review the following documents set by this developer:</p>
+    <ul>
+        <li><a href="link_to_privacy_policy" target="_blank">Privacy Policy</a></li>
+        <li><a href="link_to_terms_of_service" target="_blank">Terms of Service</a></li>
+    </ul>
+
+    <p>Please ensure you understand how your data will be used and your rights regarding its use.</p>
+    
+    <button id="consentButton">I Consent</button>
+
+    <script>
+        document.getElementById('consentButton').addEventListener('click', function() {
+            // هنا يمكنك إضافة المنطق الخاص بك بعد تقديم الموافقة
+            alert('Thank you for your consent!');
+            // يمكنك أيضًا تنفيذ أي منطق آخر مثل إرسال البيانات إلى الخادم
+        });
+    </script>
+
 </body>
 </html>
