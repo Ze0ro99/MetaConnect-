@@ -2,7 +2,7 @@
 .envbackend
 PORT=3001
 PI_API_KEY=your-pi-api-
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/mydatabase
+MONGODB_URI=mongodb+srv://Ze0ro99:Hh$5730OHh$5730OHh$5730O@cluster.mongodb.net/mydatabase
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 FACEBOOK_CLIENT_ID=your-facebook-client-id
