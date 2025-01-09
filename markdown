@@ -1,4 +1,4 @@
-https://your-username.github.io/MetaConnect/privacy_policy.htmlللمزيد من المعلومات حول كيفية جمع واستخدام بياناتك، يرجى الاطلاع على [# سياسة الخصوصية لمشروع MetaConnect
+https://your-Ze0ro99.github.io/MetaConnect/privacy_policy.htmlللمزيد من المعلومات حول كيفية جمع واستخدام بياناتك، يرجى الاطلاع على [# سياسة الخصوصية لمشروع MetaConnect
 
 **تاريخ السريان**: 16 نوفمبر 2024
 
@@ -125,5 +125,5 @@ Si vous avez des questions ou des demandes concernant cette politique de confide
 ## 8. Acceptation des conditions
 En utilisant l'application MetaConnect, vous acceptez la collecte et l'utilisation de vos informations comme indiqué dans cette politique de confidentialité.
 
-](http://www.privacypolicy.com/).
+](https://docs.google.com/document/d/1a6y_lsBt61FpC2fj01mydVrfP8R2p8Iewpjy4ng_MWQ/edit?usp=drivesdk).
 TERMS_OF_SERVICE.md
