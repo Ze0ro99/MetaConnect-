@@ -1,11 +1,112 @@
-/* أنماط الاستجابة */
-@media (max-width: 768px) {
-  .nav {
-    flex-direction: column;
-  }
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetaConnect</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            position: relative; /* لضمان وضع التذييل بشكل صحيح */
+            min-height: 100vh; /* لضمان تغطية كامل الشاشة */
+        }
 
-  .nav-item {
-    margin-right: 0;
-    margin-bottom: 10px;
-  }
-}
+        header {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center; /* محاذاة العناصر في الوسط */
+            margin: 20px 0;
+        }
+
+        .nav-item {
+            margin: 0 15px; /* مسافة بين العناصر */
+            text-decoration: none;
+            color: white;
+        }
+
+        .nav-item:hover {
+            text-decoration: underline; /* تأثير عند المرور فوق الروابط */
+        }
+
+        p {
+            margin: 15px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #008CBA;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #005f7f;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #000000, #800080, #ff0000); /* تدرج لوني */
+            color: white;
+            text-align: center;
+            padding: 20px; /* زيادة padding لجعله أكثر اتساعًا */
+            width: 100%;
+            position: relative; /* تغيير إلى relative */
+        }
+
+        .logo {
+            width: 100px; /* يمكنك تعديل الحجم حسب الحاجة */
+            margin: 20px auto;
+            display: block;
+        }
+
+        /* أنماط الاستجابة */
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column; /* تغيير الاتجاه إلى عمودي */
+                align-items: center; /* محاذاة العناصر في المركز */
+            }
+
+            .nav-item {
+                margin: 10px 0; /* مسافة بين العناصر العمودية */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>مرحباً بك في MetaConnect</h1>
+        <img src="https://example.com/path_to_logo_image.png" alt="شعار MetaConnect" class="logo">
+        <nav class="nav">
+            <a href="#" class="nav-item">الرئيسية</a>
+            <a href="#" class="nav-item">الخدمات</a>
+            <a href="#" class="nav-item">اتصل بنا</a>
+        </nav>
+    </header>
+    
+    <main>
+        <p>هذه الصفحة مخصصة لتقديم خدمات MetaConnect. نحن هنا لمساعدتك في التواصل وإدارة الشبكات بسهولة وسرعة.</p>
+        <a class="btn" href="https://www.privacypolicy.com">لزيارة سياسة الخصوصية</a>
+    </main>
+
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2025 MetaConnect, Inc.</p>
+    </footer>
+</body>
+</html>
