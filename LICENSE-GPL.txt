@@ -1,0 +1,9 @@
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+<http://www.gnu.org/licenses/gpl-3.0.html>
+
+Copyright (c) 2025 MetaConnect
+
+...
+
+This License is intended to guarantee your freedom to share and change all versions of a program—to make sure it is free software for all its users.
