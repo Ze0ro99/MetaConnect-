@@ -3,30 +3,42 @@
 # إعداد المتغيرات
 REPO_URL="https://github.com/Ze0ro99/MetaConnect-"
 LOCAL_DIR="MetaConnect"
+SOURCE_DIR="/path/to/source"  # استبدل بمسار الملفات المطلوبة
+DESTINATION_DIR="./path/to/destination"  # استبدل بمسار الوجهة في المستودع
 
 # استنساخ المستودع إذا لم يكن موجودًا
 if [ ! -d "$LOCAL_DIR" ]; then
+  echo "Cloning repository into $LOCAL_DIR..."
   git clone "$REPO_URL" "$LOCAL_DIR"
+else
+  echo "Repository already exists in $LOCAL_DIR."
 fi
 
-cd "$LOCAL_DIR" || exit
+# الانتقال إلى المجلد المحلي
+cd "$LOCAL_DIR" || { echo "Failed to enter directory $LOCAL_DIR"; exit 1; }
 
 # استرجاع قائمة الفروع من المستودع
+git fetch origin
 BRANCHES=$(git branch -r | grep -v '\->' | sed 's/origin\///')
 
 # حلقة لتكرار الفروع
 for BRANCH in $BRANCHES; do
   echo "Processing branch: $BRANCH"
-  
+
+  # الانتقال إلى الفرع المحدد
+  git checkout "$BRANCH" || { echo "Failed to checkout branch $BRANCH"; continue; }
+
   # سحب آخر التحديثات من الفرع المحدد
-  git checkout "$BRANCH"
-  
-  # محاولة السحب مع معالجة الأخطاء
   if git pull origin "$BRANCH"; then
     echo "Successfully pulled updates for branch: $BRANCH"
-    
+
     # نقل الملفات المطلوبة (تعديل المسارات حسب الحاجة)
-    cp -r /path/to/source/* ./path/to/destination/
+    if [ -d "$SOURCE_DIR" ]; then
+      echo "Copying files from $SOURCE_DIR to $DESTINATION_DIR..."
+      cp -r "$SOURCE_DIR"/* "$DESTINATION_DIR/"
+    else
+      echo "Source directory $SOURCE_DIR does not exist. Skipping file copy."
+    fi
 
     # إضافة الملفات إلى Git
     git add .
@@ -34,7 +46,11 @@ for BRANCH in $BRANCHES; do
     # التحقق من وجود تغييرات
     if ! git diff --cached --quiet; then
       git commit -m "تحديث الملفات والمكتبات في الفرع $BRANCH"
-      git push origin "$BRANCH"
+      if git push origin "$BRANCH"; then
+        echo "Successfully pushed updates to branch: $BRANCH"
+      else
+        echo "Failed to push updates to branch: $BRANCH"
+      fi
     else
       echo "لا توجد تغييرات جديدة للإرسال في الفرع $BRANCH."
     fi
@@ -42,3 +58,5 @@ for BRANCH in $BRANCHES; do
     echo "فشل السحب من الفرع: $BRANCH. الانتقال إلى الفرع التالي."
   fi
 done
+
+echo "تمت معالجة جميع الفروع بنجاح."
