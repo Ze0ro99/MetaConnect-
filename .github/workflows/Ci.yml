@@ -15,27 +15,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      # 1. التحقق من المستودع
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'  # أو أي إصدار تفضله
+      # 2. إعداد Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'  # أو أي إصدار تفضله
+          cache: 'npm'  # تمكين التخزين المؤقت للتبعيات
 
-    - name: Install dependencies
-      run: npm install
+      # 3. تثبيت التبعيات
+      - name: Install dependencies
+        run: npm ci  # استخدام npm ci لتثبيت التبعيات بشكل آمن
 
-    - name: Run tests
-      run: npm test  # تأكد من وجود اختبارات في package.json
+      # 4. تشغيل الاختبارات
+      - name: Run tests
+        run: npm test  # تأكد من وجود اختبارات في package.json
 
-    - name: Build project
-      run: npm run build  # تأكد من وجود سكربت البناء في package.json
+      # 5. بناء المشروع
+      - name: Build project
+        run: npm run build  # تأكد من وجود سكربت البناء في package.json
 
-    - name: Deploy
-      run: echo "Deploying your application..."  # يمكنك استبداله بخطوات النشر الفعلية
-git init  # إذا لم تقم بتهيئة المستودع بعد
-git add package.json package-lock.json .github
-git commit -m "Initial commit with dependencies and CI/CD setup"
-git remote add origin https://github.com/Ze0ro99/MetaConnect.git  # استبدل بـ URL المستودع الخاص بك
-git push -u origin main
+      # 6. النشر
+      - name: Deploy
+        run: echo "Deploying your application..."  # يمكنك استبداله بخطوات النشر الفعلية
