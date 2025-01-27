@@ -6,21 +6,32 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint .",
-    "clean": "rimraf .next"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",  // دعم TypeScript
+    "clean": "rimraf .next",
+    "format": "prettier --write '**/*.{js,jsx,ts,tsx,css,md,json}'",  // إضافة تنسيق الكود
+    "test": "jest"  // إضافة اختبارات
   },
   "dependencies": {
     "next": "^14.2.15",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "rimraf": "^4.0.0"
+    "rimraf": "^4.0.0",
+    "@pihq/pi-web-sdk": "^2.0.0"  // إضافة SDK لـ Pi Network
   },
   "devDependencies": {
     "eslint": "^8.40.0",
-    "eslint-config-next": "^13.0.0"
+    "eslint-config-next": "^14.0.0",  // تحديث إصدار ESLint لـ Next.js
+    "prettier": "^3.0.0",  // إضافة Prettier لتنسيق الكود
+    "jest": "^29.0.0",  // إضافة Jest للاختبارات
+    "typescript": "^5.0.0",  // إضافة TypeScript
+    "@types/react": "^18.0.0",  // إضافة أنواع React
+    "@types/node": "^20.0.0"  // إضافة أنواع Node.js
   },
   "eslintConfig": {
-    "extends": "next/core-web-vitals"
+    "extends": "next/core-web-vitals",
+    "parserOptions": {
+      "project": "./tsconfig.json"  // دعم TypeScript
+    }
   },
   "browserslist": {
     "production": [
@@ -33,5 +44,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "testEnvironment": "jsdom",  // تهيئة Jest لبيئة الاختبار
+    "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"]  // إعدادات إضافية لـ Jest
   }
 }
