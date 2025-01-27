@@ -15,15 +15,15 @@ jobs:
       - name: Run Terraform or Terragrunt actions
         uses: CloudNation-nl/cn-terragrunt-github-actions@v0.0.16
         with:
-          tf_actions: # Specify the Terraform or Terragrunt command here
-          tf_actions_binary: terragrunt # Optional, defaults to terragrunt
-          tf_actions_version: # Optional, defaults to latest
-          tg_actions_version: # Optional, defaults to latest
-          tf_actions_cli_credentials_hostname: # Optional, defaults to app.terraform.io
-          tf_actions_cli_credentials_token: # Optional
-          tf_actions_comment: true # Optional, defaults to true
-          tf_actions_working_dir: . # Optional, defaults to current directory
-          tf_actions_fmt_write: # Optional
+          tf_actions: "apply"  # الأمر المطلوب لتطبيق التغييرات
+          tf_actions_binary: "terragrunt"  # استخدم terragrunt
+          tf_actions_version: "1.0.0"  # اختر إصدار Terraform المناسب
+          tg_actions_version: "0.0.16"  # إصدار Terragrunt
+          tf_actions_cli_credentials_hostname: "app.terraform.io"  # أو تركه فارغًا لاستخدام الافتراضي
+          tf_actions_cli_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}  # استخدم سرًا لحماية الرمز
+          tf_actions_comment: true  # إضافة تعليق (true أو false)
+          tf_actions_working_dir: "."  # الدليل الحالي
+          tf_actions_fmt_write: true  # كتابة التنسيق (true أو false)
 
       - name: Create artifact
         run: |
