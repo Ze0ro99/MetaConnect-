@@ -1,21 +1,23 @@
 import React from 'react';
-import PiLoginButton from './components/PiLoginButton';
-import PiPaymentButton from './components/PiPaymentButton';
-import './App.css';  // إضافة ملف CSS لتنسيق التطبيق
+import { Pi } from '@pihq/pi-web-sdk';
 
-function App() {
+const pi = Pi.init({ version: '2.0', sandbox: true });
+
+export default function PiLoginButton() {
+  const handleLogin = async () => {
+    try {
+      const auth = await pi.authenticate();
+      alert(`Welcome, ${auth.user.username}!`);
+      // يمكنك هنا حفظ بيانات المستخدم في حالة (state) أو إرسالها إلى الخادم
+    } catch (error) {
+      console.error('Login failed', error);
+      alert('Login failed. Please try again.');
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Welcome to PiHub</h1>
-        <p>Your gateway to seamless Pi Network integration.</p>
-        <div className="buttons-container">
-          <PiLoginButton />
-          <PiPaymentButton />
-        </div>
-      </header>
-    </div>
+    <button className="pi-login-button" onClick={handleLogin}>
+      Login with Pi
+    </button>
   );
 }
-
-export default App;
