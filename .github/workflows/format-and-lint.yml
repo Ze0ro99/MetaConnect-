@@ -3,43 +3,52 @@ name: Format and Lint Code
 on: [push, pull_request]
 
 jobs:
-  format:
+  format-and-lint:
     runs-on: ubuntu-latest
+
     steps:
+      # 1. التحقق من المستودع
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4  # تم التحديث إلى الإصدار الأحدث
 
+      # 2. إعداد Node.js لتنسيق وفحص JavaScript
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4  # تم التحديث إلى الإصدار الأحدث
         with:
-          node-version: '16'
+          node-version: '20'  # تم التحديث إلى الإصدار الأحدث
 
+      # 3. تثبيت Prettier و ESLint لـ JavaScript
       - name: Install Prettier and ESLint (JavaScript)
         run: |
           npm install --save-dev prettier eslint
           npx eslint . --fix
-          npx prettier --write '**/*.js'
+          npx prettier --write '**/*.{js,jsx,ts,tsx}'  # تمت إضافة دعم لـ TypeScript
 
+      # 4. إعداد Python لتنسيق وفحص Python
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4  # تم التحديث إلى الإصدار الأحدث
         with:
-          python-version: '3.8'
+          python-version: '3.10'  # تم التحديث إلى الإصدار الأحدث
 
+      # 5. تثبيت Black و Flake8 لـ Python
       - name: Install Black and Flake8 (Python)
         run: |
           pip install black flake8
           flake8 . --max-line-length=79 --extend-ignore=E203
           black . --line-length 79
 
+      # 6. تثبيت Clang-Tidy لفحص C++
       - name: Install C++ Linter
         run: |
           sudo apt-get install -y clang-tools
-          clang-tidy **/*.cpp --fix
+          find . -name '*.cpp' -exec clang-tidy {} --fix \;
 
+      # 7. تثبيت ShellCheck لفحص Shell Scripts
       - name: Install ShellCheck (Shell)
         run: |
           sudo apt-get install -y shellcheck
           find . -name '*.sh' -exec shellcheck {} \;
 
+      # 8. رسالة للغات الأخرى
       - name: Check for other languages
         run: echo "يمكنك إضافة المزيد من أدوات التنسيق والتحقق حسب الحاجة."
