@@ -1,0 +1,45 @@
+name: Format and Lint Code
+
+on: [push, pull_request]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install Prettier and ESLint (JavaScript)
+        run: |
+          npm install --save-dev prettier eslint
+          npx eslint . --fix
+          npx prettier --write '**/*.js'
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install Black and Flake8 (Python)
+        run: |
+          pip install black flake8
+          flake8 . --max-line-length=79 --extend-ignore=E203
+          black . --line-length 79
+
+      - name: Install C++ Linter
+        run: |
+          sudo apt-get install -y clang-tools
+          clang-tidy **/*.cpp --fix
+
+      - name: Install ShellCheck (Shell)
+        run: |
+          sudo apt-get install -y shellcheck
+          find . -name '*.sh' -exec shellcheck {} \;
+
+      - name: Check for other languages
+        run: echo "يمكنك إضافة المزيد من أدوات التنسيق والتحقق حسب الحاجة."
