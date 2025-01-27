@@ -1,24 +1,21 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Home from './components/Home';
-import Profile from './components/Profile';
-import VirtualWorld from './components/VirtualWorld';
+import PiLoginButton from './components/PiLoginButton';
+import PiPaymentButton from './components/PiPaymentButton';
+import './App.css';  // إضافة ملف CSS لتنسيق التطبيق
 
-const App = () => {
+function App() {
   return (
-    <Router>
-      <Header />
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/virtual-world" component={VirtualWorld} />
-      </Switch>
-      <Footer />
-    </Router>
+    <div className="App">
+      <header className="App-header">
+        <h1>Welcome to PiHub</h1>
+        <p>Your gateway to seamless Pi Network integration.</p>
+        <div className="buttons-container">
+          <PiLoginButton />
+          <PiPaymentButton />
+        </div>
+      </header>
+    </div>
   );
-};
+}
 
 export default App;
-npm start 
