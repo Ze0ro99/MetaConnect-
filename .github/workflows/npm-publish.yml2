@@ -38,4 +38,4 @@ jobs:
     - name: Publish package
       run: npm publish
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ https://gist.github.com/Ze0ro99/f3c96aa9ce8a0f535f28b35bb6352416 }}
