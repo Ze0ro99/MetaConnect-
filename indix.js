@@ -1,32 +1,19 @@
-const express = require('express');
-const { Sequelize } = require('sequelize');
+import React from 'react';
+import { createRoot } from 'react-dom/client';  // استخدام createRoot بدلاً من ReactDOM.render
+import App from './App';
+import './index.css';  // تأكد من وجود ملف CSS لتنسيق التطبيق
+import reportWebVitals from './reportWebVitals';  // إضافة لقياس أداء التطبيق
 
-// إعداد قاعدة البيانات
-const sequelize = new Sequelize('database', 'username', 'password', {
-  host: 'localhost',
-  dialect: 'postgres',
-});
+// الحصول على العنصر الجذر (root) من DOM
+const container = document.getElementById('root');
+const root = createRoot(container);  // إنشاء جذر التطبيق
 
-// اختبار الاتصال بقاعدة البيانات
-sequelize.authenticate()
-  .then(() => {
-    console.log('Connected to the PostgreSQL database successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
+// عرض التطبيق داخل الجذر
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
 
-// إعداد Express
-const app = express();
-app.use(express.json());
-
-// إعداد مسار أساسي
-app.get('/', (req, res) => {
-  res.send('Welcome to Metaconnect API!');
-});
-
-// بدء الخادم
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// قياس أداء التطبيق (اختياري)
+reportWebVitals();
