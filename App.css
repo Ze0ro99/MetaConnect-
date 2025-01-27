@@ -1,0 +1,33 @@
+.App {
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #282c34;
+  color: white;
+}
+
+.App-header {
+  padding: 20px;
+}
+
+.buttons-container {
+  margin-top: 20px;
+}
+
+.pi-login-button, .pi-payment-button {
+  background-color: #61dafb;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #282c34;
+}
+
+.pi-login-button:hover, .pi-payment-button:hover {
+  background-color: #21a1f1;
+}
