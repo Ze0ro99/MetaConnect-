@@ -1,28 +1,29 @@
-# Basic `dependabot.yml` file with
-# minimum configuration for three package managers
-
 version: 2
 updates:
-  # Enable version updates for npm
+  # تحديثات npm
   - package-ecosystem: "npm"
-    # Look for `package.json` and `lock` files in the `root` directory
     directory: "/"
-    # Check the npm registry for updates every day (weekdays)
     schedule:
-      interval: "daily"
+      interval: "daily"  # التحقق يوميًا
+    # إضافة خيارات لتجنب تعارضات الإصدارات
+    allow:
+      - dependency-name: "*"  # السماح بجميع الحزم
+        dependency-type: "all"  # التبعيات العادية والتطويرية
+    # تجاهل بعض الحزم إذا لزم الأمر
+    ignore:
+      - dependency-name: "eslint"  # تجاهل eslint لتجنب التعارض
+        versions: ["8.x.x"]  # تجاهل الإصدار 8.x.x
+      - dependency-name: "@typescript-eslint/parser"
+        versions: ["4.x.x"]  # تجاهل الإصدار 4.x.x
 
-  # Enable version updates for Docker
+  # تحديثات Docker
   - package-ecosystem: "docker"
-    # Look for a `Dockerfile` in the `root` directory
     directory: "/"
-    # Check for updates once a week
     schedule:
-      interval: "weekly"
+      interval: "weekly"  # التحقق أسبوعيًا
 
-  # Enable version updates for GitHub Actions
+  # تحديثات GitHub Actions
   - package-ecosystem: "github-actions"
-    # Workflow files stored in the default location of `.github/workflows`
-    # You don't need to specify `/.github/workflows` for `directory`. You can use `directory: "/"`.
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "weekly"  # التحقق أسبوعيًا
