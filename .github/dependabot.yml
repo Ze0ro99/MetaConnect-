@@ -11,6 +11,10 @@ updates:
       prefix: "fix"  # بادئة رسالة الالتزام لتحسين التبعيات
     ignore:
       - dependency-name: "some-package"  # استبعاد حزمة معينة من التحديثات
+      - dependency-name: "eslint"  # تجاهل eslint لتجنب التعارضات
+        versions: ["8.x.x"]  # تجاهل الإصدار 8.x.x
+      - dependency-name: "@typescript-eslint/parser"
+        versions: ["4.x.x"]  # تجاهل الإصدار 4.x.x
 
   # 2. تحديث التبعيات الخاصة بـ npm في الواجهة الخلفية
   - package-ecosystem: "npm"  # نظام إدارة الحزم المستخدم في الواجهة الخلفية
@@ -22,6 +26,10 @@ updates:
       prefix: "fix"  # بادئة رسالة الالتزام لتحسين التبعيات
     ignore:
       - dependency-name: "some-package"  # استبعاد حزمة معينة من التحديثات
+      - dependency-name: "eslint"  # تجاهل eslint لتجنب التعارضات
+        versions: ["8.x.x"]  # تجاهل الإصدار 8.x.x
+      - dependency-name: "@typescript-eslint/parser"
+        versions: ["4.x.x"]  # تجاهل الإصدار 4.x.x
 
   # 3. مراقبة تبعيات GitHub Actions
   - package-ecosystem: "github-actions"  # نظام إدارة الحزم المستخدم لتبعيات GitHub Actions
@@ -32,3 +40,4 @@ updates:
       prefix: "chore"  # بادئة رسالة الالتزام لعمليات الصيانة
     ignore:
       - dependency-name: "actions/setup-node"  # استبعاد حزمة معينة من التحديثات
+      - dependency-name: "actions/checkout"  # استبعاد حزمة معينة من التحديثات
