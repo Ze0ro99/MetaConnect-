@@ -10,69 +10,68 @@
     "start": "next start"
   },
   "dependencies": {
-    "next": "^13.4.0",
+    "next": "^14.0.0",  // تم التحديث إلى الإصدار الأحدث
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "eslint": "^8.42.0",
+    "eslint": "^8.57.0",  // تم التحديث إلى الإصدار الأحدث
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-import": "^2.29.1",  // تم التحديث إلى الإصدار الأحدث
+    "eslint-plugin-jsx-a11y": "^6.8.0",  // إضافة لتحسين إمكانية الوصول
+    "eslint-plugin-react": "^7.34.0",  // تم التحديث إلى الإصدار الأحدث
     "eslint-plugin-react-hooks": "^4.6.0",
-    "babel-eslint": "^10.1.0"  // قد ترغب في استخدام @babel/eslint-parser بدلاً من ذلك
+    "@babel/eslint-parser": "^7.23.9"  // استبدال babel-eslint
   },
   "eslintConfig": {
     "extends": [
       "airbnb",
-      "plugin:react/recommended"
+      "plugin:react/recommended",
+      "plugin:jsx-a11y/recommended"  // إضافة لتحسين إمكانية الوصول
     ],
-    "parser": "babel-eslint",
+    "parser": "@babel/eslint-parser",  // تحديث المحلل
     "rules": {
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
       "import/prefer-default-export": "off"
     }
   },
   "keywords": [
-  "metaverse",
-  "virtual reality",
-  "augmented reality",
-  "3D simulation",
-  "blockchain",
-  "JavaScript",
-  "React",
-  "Next.js",
-  "web development",
-  "decentralized applications",
-  "digital currency",
-  "user experience",
-  "immersive technology",
-  "social interaction",
-  "game development",
-  "online communities",
-  "cross-platform",
-  "interactive applications",
-  "AI in gaming",
-  "tech innovation"
-
-  "ميتافيرس",
-  "الواقع الافتراضي",
-  "الواقع المعزز",
-  "محاكاة ثلاثية الأبعاد",
-  "تطبيقات لامركزية",
-  "تطوير الويب",
-  "تجربة المستخدم",
-  "تقنية غامرة",
-  "التفاعل الاجتماعي",
-  "تطوير الألعاب",
-  "عملات رقمية",
-  "مجتمعات عبر الإنترنت",
-  "تطبيقات تفاعلية",
-  "التقنية الحديثة",
-  "ابتكار تقني"
-
-
-],
+    "metaverse",
+    "virtual reality",
+    "augmented reality",
+    "3D simulation",
+    "blockchain",
+    "JavaScript",
+    "React",
+    "Next.js",
+    "web development",
+    "decentralized applications",
+    "digital currency",
+    "user experience",
+    "immersive technology",
+    "social interaction",
+    "game development",
+    "online communities",
+    "cross-platform",
+    "interactive applications",
+    "AI in gaming",
+    "tech innovation",
+    "ميتافيرس",
+    "الواقع الافتراضي",
+    "الواقع المعزز",
+    "محاكاة ثلاثية الأبعاد",
+    "تطبيقات لامركزية",
+    "تطوير الويب",
+    "تجربة المستخدم",
+    "تقنية غامرة",
+    "التفاعل الاجتماعي",
+    "تطوير الألعاب",
+    "عملات رقمية",
+    "مجتمعات عبر الإنترنت",
+    "تطبيقات تفاعلية",
+    "التقنية الحديثة",
+    "ابتكار تقني"
+  ],
   "author": "Ze0ro99",
   "license": "MIT"
 }
