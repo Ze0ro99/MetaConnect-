@@ -13,22 +13,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. التحقق من المستودع
       - name: Check out code
         uses: actions/checkout@v4
 
+      # 2. إعداد Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'  # يمكنك استبدال الإصدار حسب الحاجة
+          cache: 'npm'  # تمت إضافة ذاكرة التخزين المؤقت لتسريع تثبيت التبعيات
 
+      # 3. تثبيت التبعيات
       - name: Install dependencies
-        run: npm install
+        run: npm ci  # استخدام npm ci لتثبيت التبعيات بشكل آمن
 
+      # 4. بناء المشروع
       - name: Build
         run: npm run build
 
+      # 5. النشر إلى GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./build  # المسار الذي يحتوي على الملفات المبنية
+          keep_files: true  # الاحتفاظ بالملفات الموجودة في الفرع gh-pages
