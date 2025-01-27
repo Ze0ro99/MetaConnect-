@@ -1,5 +1,3 @@
-# .github/workflows/publish-package.yml
-
 name: Publish MetaConnect Package
 
 on:
@@ -11,31 +9,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # 1. التحقق من المستودع
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      # 1. التحقق من المستودع
+      - name: Checkout repository
+        uses: actions/checkout@v4  # تم التحديث إلى الإصدار الأحدث
 
-    # 2. إعداد Node.js
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20'  # استخدم النسخة الأحدث
-        registry-url: https://npm.pkg.github.com/
+      # 2. إعداد Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4  # تم التحديث إلى الإصدار الأحدث
+        with:
+          node-version: '20'  # استخدم النسخة الأحدث
+          registry-url: https://npm.pkg.github.com/
 
-    # 3. تثبيت التبعيات
-    - name: Install dependencies
-      run: npm install
+      # 3. تثبيت التبعيات
+      - name: Install dependencies
+        run: npm ci  # استخدام npm ci لتثبيت التبعيات بشكل آمن
 
-    # 4. تشغيل الاختبارات
-    - name: Run tests
-      run: npm test
+      # 4. تشغيل الاختبارات
+      - name: Run tests
+        run: npm test
 
-    # 5. تسجيل الدخول إلى GitHub Packages
-    - name: Log in to GitHub Packages
-      run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+      # 5. تسجيل الدخول إلى GitHub Packages
+      - name: Log in to GitHub Packages
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
 
-    # 6. نشر الحزمة على GitHub Packages
-    - name: Publish package
-      run: npm publish
-      env:
-        NODE_AUTH_TOKEN: ${{ https://gist.github.com/Ze0ro99/f3c96aa9ce8a0f535f28b35bb6352416 }}
+      # 6. نشر الحزمة على GitHub Packages
+      - name: Publish package
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # استخدام GITHUB_TOKEN للنشر
