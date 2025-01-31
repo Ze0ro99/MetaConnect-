@@ -4,40 +4,114 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  example_job:
+  terraform_plan:
+    name: "Plan Terraform/Terragrunt Changes"
     runs-on: ubuntu-latest
+    environment: staging  # بيئة الاختبار (Staging)
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # الإصدار الأحدث من action/checkout
 
-      - name: Run Terraform or Terragrunt actions
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2  # الإصدار الأحدث من setup-terraform
+        with:
+          terraform_version: "1.5.0"  # إصدار Terraform المحدث
+          terraform_wrapper: false
+
+      - name: Run Terragrunt Plan
         uses: CloudNation-nl/cn-terragrunt-github-actions@v0.0.16
         with:
-          tf_actions: "apply"  # الأمر المطلوب لتطبيق التغييرات
-          tf_actions_binary: "terragrunt"  # استخدم terragrunt
-          tf_actions_version: "1.0.0"  # اختر إصدار Terraform المناسب
-          tg_actions_version: "0.0.16"  # إصدار Terragrunt
-          tf_actions_cli_credentials_hostname: "app.terraform.io"  # أو تركه فارغًا لاستخدام الافتراضي
-          tf_actions_cli_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}  # استخدم سرًا لحماية الرمز
-          tf_actions_comment: true  # إضافة تعليق (true أو false)
-          tf_actions_working_dir: "."  # الدليل الحالي
-          tf_actions_fmt_write: true  # كتابة التنسيق (true أو false)
+          tf_actions: "plan"  # تنفيذ أمر plan
+          tf_actions_binary: "terragrunt"
+          tf_actions_version: "1.5.0"  # إصدار Terraform المحدث
+          tg_actions_version: "0.50.0"  # إصدار Terragrunt المحدث
+          tf_actions_cli_credentials_hostname: "app.terraform.io"
+          tf_actions_cli_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}
+          tf_actions_comment: true
+          tf_actions_working_dir: "."
+          tf_actions_fmt_write: true
+
+      - name: Save Plan Output
+        run: |
+          mkdir -p output
+          terragrunt plan -out=output/plan.tfplan
+
+      - name: Upload Plan Artifact
+        uses: actions/upload-artifact@v3  # الإصدار الأحدث من upload-artifact
+        with:
+          name: terraform-plan
+          path: output/plan.tfplan
+
+  terraform_apply:
+    name: "Apply Terraform/Terragrunt Changes"
+    runs-on: ubuntu-latest
+    environment: production  # بيئة الإنتاج (Production)
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: "1.5.0"
+          terraform_wrapper: false
+
+      - name: Run Terragrunt Apply
+        uses: CloudNation-nl/cn-terragrunt-github-actions@v0.0.16
+        with:
+          tf_actions: "apply"  # تنفيذ أمر apply
+          tf_actions_binary: "terragrunt"
+          tf_actions_version: "1.5.0"
+          tg_actions_version: "0.50.0"
+          tf_actions_cli_credentials_hostname: "app.terraform.io"
+          tf_actions_cli_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}
+          tf_actions_comment: true
+          tf_actions_working_dir: "."
+          tf_actions_fmt_write: true
+
+      - name: Validate Terraform configuration
+        run: terragrunt validate  # التحقق من صحة تكوين Terraform
 
       - name: Create artifact
         run: |
           echo "Creating artifact..."
-          mkdir output
+          mkdir -p output
           echo "Hello, World!" > output/hello.txt
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: my-artifact
           path: output/
 
-      - name: Download artifact
-        uses: actions/download-artifact@v4.1.7
+  terraform_destroy:
+    name: "Destroy Terraform/Terragrunt Resources"
+    runs-on: ubuntu-latest
+    environment: cleanup  # بيئة التنظيف (Cleanup)
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
         with:
-          name: my-artifact
+          terraform_version: "1.5.0"
+          terraform_wrapper: false
+
+      - name: Run Terragrunt Destroy
+        uses: CloudNation-nl/cn-terragrunt-github-actions@v0.0.16
+        with:
+          tf_actions: "destroy"  # تنفيذ أمر destroy
+          tf_actions_binary: "terragrunt"
+          tf_actions_version: "1.5.0"
+          tg_actions_version: "0.50.0"
+          tf_actions_cli_credentials_hostname: "app.terraform.io"
+          tf_actions_cli_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}
+          tf_actions_comment: true
+          tf_actions_working_dir: "."
+          tf_actions_fmt_write: true
