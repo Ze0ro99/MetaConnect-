@@ -26,7 +26,7 @@ jobs:
 
       # 4. إعداد Python لتنسيق وفحص Python
       - name: Set up Python
-        uses: actions/setup-python@v4  # تم التحديث إلى الإصدار الأحدث
+        uses: actions/setup-python@v5  # تم التحديث إلى الإصدار الأحدث
         with:
           python-version: '3.10'  # تم التحديث إلى الإصدار الأحدث
 
