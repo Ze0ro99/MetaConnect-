@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Terraform or Terragrunt actions
-        uses: CloudNation-nl/cn-terragrunt-github-actions@v0.0.16
+        uses: CloudNation-nl/cn-terragrunt-github-actions@v0.1
         with:
           tf_actions: apply # الأمر الفرعي الذي سيتم تنفيذه
           tf_actions_binary: terragrunt # يمكن تغييره إلى terraform إذا لزم الأمر
