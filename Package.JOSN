@@ -1,0 +1,19 @@
+{
+  "name": "metaconnect",
+  "version": "1.0.0",
+  "description": "Advanced idea to contribute to developing the Pinetwork environment and the real world.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "author": "Ze0ro99",
+  "license": "ISC"
+}
