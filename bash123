@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Step 1: Update all dependencies to the latest version
+echo "Updating all dependencies to the latest version..."
+npm install -g npm-check-updates
+ncu -u
+npm install
+
+# Step 2: Manually delete duplicate files
+echo "Deleting duplicate files..."
+# Add commands to delete specific duplicate files (if any)
+
+# Step 3: Fix errors using ESLint and Prettier
+echo "Fixing errors using ESLint and Prettier..."
+npm install eslint prettier --save-dev
+npx eslint --fix .
+npx prettier --write .
+
+# Run tests to ensure everything is working
+echo "Running tests to ensure everything is working..."
+npm test
+
+echo "Update and cleanup completed successfully."
