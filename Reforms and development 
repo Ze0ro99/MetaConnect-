@@ -1,0 +1,313 @@
+#!/bin/bash
+
+# Define directories and files
+BASE_DIR="MetaConnect"
+BACKEND_DIR="$BASE_DIR/backend"
+FRONTEND_DIR="$BASE_DIR/frontend"
+
+# Ensure required directories exist
+mkdir -p $BACKEND_DIR/models $BACKEND_DIR/routes $FRONTEND_DIR/src/components $FRONTEND_DIR/src/pages $FRONTEND_DIR/src/styles
+
+# Update dependencies and fix vulnerabilities
+echo "Updating backend dependencies..."
+cd $BACKEND_DIR
+npm install --save express@latest mongoose@latest
+npm install --save-dev nodemon@latest eslint@latest
+
+echo "Updating frontend dependencies..."
+cd ../$FRONTEND_DIR
+npm install --save next@latest react@latest react-dom@latest rimraf@latest
+npm install --save-dev eslint@latest eslint-config-next@latest jest@latest babel-jest@latest
+
+# Create .env file in backend
+echo -e "MONGO_URI=your_mongodb_connection_string\nPORT=5000" > $BACKEND_DIR/.env
+
+# Create server.js in backend
+cat <<EOL > $BACKEND_DIR/server.js
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv').config();
+
+const app = express();
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
+app.use(express.json());
+
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("MongoDB connected"))
+    .catch(err => console.error("MongoDB connection error:", err));
+
+app.use('/api/transactions', require('./routes/transactions'));
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(\`Server running on port \${PORT}\`));
+EOL
+
+# Create User.js in backend/models
+cat <<EOL > $BACKEND_DIR/models/User.js
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+
+const UserSchema = new mongoose.Schema({
+  username: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  balance: { type: Number, default: 0 },
+  referrals: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+});
+
+UserSchema.pre('save', async function(next) {
+  if (!this.isModified('password')) return next();
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
+
+UserSchema.methods.comparePassword = function(password) {
+  return bcrypt.compare(password, this.password);
+};
+
+module.exports = mongoose.model('User', UserSchema);
+EOL
+
+# Create Transaction.js in backend/models
+cat <<EOL > $BACKEND_DIR/models/Transaction.js
+const mongoose = require('mongoose');
+
+const TransactionSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  amount: { type: Number, required: true },
+  type: { type: String, enum: ['deposit', 'withdrawal'], required: true },
+  date: { type: Date, default: Date.now }
+});
+
+module.exports = mongoose.model('Transaction', TransactionSchema);
+EOL
+
+# Create transactions.js in backend/routes
+cat <<EOL > $BACKEND_DIR/routes/transactions.js
+const express = require('express');
+const router = express.Router();
+const Transaction = require('../models/Transaction');
+const User = require('../models/User');
+
+router.post('/deposit', async (req, res) => {
+  try {
+    const { userId, amount } = req.body;
+    const newTransaction = new Transaction({ user: userId, amount, type: 'deposit' });
+    await newTransaction.save();
+    await User.findByIdAndUpdate(userId, { \$inc: { balance: amount } });
+    res.status(200).json({ message: 'Deposit successful', transaction: newTransaction });
+  } catch (error) {
+    res.status(500).json({ message: 'Error processing deposit', error });
+  }
+});
+
+router.post('/withdraw', async (req, res) => {
+  try {
+    const { userId, amount } = req.body;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    if (user.balance < amount) {
+      return res.status(400).json({ message: 'Insufficient balance' });
+    }
+    const newTransaction = new Transaction({ user: userId, amount, type: 'withdrawal' });
+    await newTransaction.save();
+    await User.findByIdAndUpdate(userId, { \$inc: { balance: -amount } });
+    res.status(200).json({ message: 'Withdrawal successful', transaction: newTransaction });
+  } catch (error) {
+    res.status(500).json({ message: 'Error processing withdrawal', error });
+  }
+});
+
+module.exports = router;
+EOL
+
+# Create package.json in backend
+cat <<EOL > $BACKEND_DIR/package.json
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for MetaConnect",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.9.5",
+    "dotenv": "^16.0.0",
+    "cors": "^2.8.5",
+    "bcrypt": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "eslint": "^9.18.0"
+  }
+}
+EOL
+
+# Create package.json in frontend
+cat <<EOL > $FRONTEND_DIR/package.json
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "Frontend for MetaConnect",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "clean": "rimraf .next",
+    "test": "jest"
+  },
+  "dependencies": {
+    "next": "^14.2.15",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "rimraf": "^3.0.2",
+    "@vercel/json": "^2.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.40.0",
+    "eslint-config-next": "^13.0.0",
+    "jest": "^29.0.0",
+    "babel-jest": "^29.0.0"
+  },
+  "eslintConfig": {
+    "extends": "next/core-web-vitals"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
+EOL
+
+# Create next.config.js in frontend
+cat <<EOL > $FRONTEND_DIR/next.config.js
+module.exports = {
+  reactStrictMode: true,
+};
+EOL
+
+# Create index.js in frontend/pages
+cat <<EOL > $FRONTEND_DIR/src/pages/index.js
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+
+const Home = () => {
+  return (
+    <div>
+      <Header />
+      <h2>Welcome to MetaConnect!</h2>
+      <Footer />
+    </div>
+  );
+};
+
+export default Home;
+EOL
+
+# Create profile.js in frontend/pages
+cat <<EOL > $FRONTEND_DIR/src/pages/profile.js
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+
+const Profile = () => {
+  return (
+    <div>
+      <Header />
+      <h2>Your Profile</h2>
+      <Footer />
+    </div>
+  );
+};
+
+export default Profile;
+EOL
+
+# Create Header.js in frontend/src/components
+cat <<EOL > $FRONTEND_DIR/src/components/Header.js
+import React from 'react';
+
+const Header = () => {
+  return (
+    <header>
+      <h1>MetaConnect</h1>
+      {/* Navigation links */}
+    </header>
+  );
+};
+
+export default Header;
+EOL
+
+# Create Footer.js in frontend/src/components
+cat <<EOL > $FRONTEND_DIR/src/components/Footer.js
+import React from 'react';
+
+const Footer = () => {
+  return (
+    <footer>
+      <p>© 2024 MetaConnect</p>
+    </footer>
+  );
+};
+
+export default Footer;
+EOL
+
+# Create globals.css in frontend/src/styles
+echo -e "/* Global styles here */" > $FRONTEND_DIR/src/styles/globals.css
+
+# Create README.md
+cat <<EOL > $BASE_DIR/README.md
+# MetaConnect
+
+MetaConnect is an application that integrates the metaverse and virtual reality, supporting various digital payment methods.
+
+## System Requirements
+- Node.js (>= 14.x)
+- MongoDB
+
+## Setup Instructions
+
+### Backend
+1. Navigate to the \`backend\` folder.
+2. Install dependencies:
+   \`\`\`bash
+   npm install
+   \`\`\`
+3. Create a \`.env\` file with your MongoDB connection string.
+4. Start the server:
+   \`\`\`bash
+   npm start
+   \`\`\`
+
+### Frontend
+1. Navigate to the \`frontend\` folder.
+2. Install dependencies:
+   \`\`\`bash
+   npm install
+   \`\`\`
+3. Start the development server:
+   \`\`\`bash
+   npm run dev
+   \`\`\`
+EOL
+
+echo "Project MetaConnect has been updated and created successfully!"
