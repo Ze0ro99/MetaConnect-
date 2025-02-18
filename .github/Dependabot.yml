@@ -27,3 +27,12 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"  # التحقق أسبوعيًا
+    # إضافة خيارات لتجنب تعارضات الإصدارات في GitHub Actions
+    allow:
+      - dependency-name: "*"
+        dependency-type: "all"
+    ignore:
+      - dependency-name: "actions/setup-node"
+        versions: ["2.x.x"]  # تجاهل الإصدار 2.x.x
+      - dependency-name: "actions/checkout"
+        versions: ["2.x.x"]  # تجاهل الإصدار 2.x.x
