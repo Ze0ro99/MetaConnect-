@@ -1,0 +1,9 @@
+Background:
+cd backend
+npm start
+http://localhost:3001
+
+Front:
+cd frontend
+npm start
+http://localhost:3000
