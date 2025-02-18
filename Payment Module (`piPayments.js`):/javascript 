@@ -1,0 +1,17 @@
+const { Pi } = require('@pihq/pi-node-sdk');
+
+const pi = Pi.init({
+  apiKey: process.env.PI_API_KEY,
+  sandbox: true,
+});
+
+async function initiatePayment(amount, memo) {
+  try {
+    const payment = await pi.createPayment({ amount, memo });
+    return payment;
+  } catch (error) {
+    console.error('Payment initiation failed:', error);
+  }
+}
+
+module.exports = { initiatePayment };
