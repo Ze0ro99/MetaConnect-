@@ -1,0 +1,23 @@
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const { initiatePayment } = require('./piPayments');
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+const MONGODB_URI = process.env.MONGODB_URI;
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Database connected'))
+  .catch((err) => console.error('Database connection error:', err));
+
+app.post('/api/pay', async (req, res) => {
+  try {
+    const payment = await initiatePayment(10, 'Test Payment');
+    res.status(200).json(payment);
+  } catch (error) {
+    res.status(500).json({ error: 'Payment failed' });
+  }
+});
+
+app.listen(PORT, () => console.log(`Backend running on http://localhost:${PORT}`));
