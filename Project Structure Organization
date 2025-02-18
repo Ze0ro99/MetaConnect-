@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # إنشاء المجلدات الأساسية
 mkdir -p MetaConnect/backend/models MetaConnect/backend/routes MetaConnect/frontend/src/components MetaConnect/frontend/pages MetaConnect/frontend/styles
 
@@ -245,7 +247,7 @@ MetaConnect is an application that integrates the metaverse and virtual reality,
 1. Navigate to the \`backend\` folder.
 2. Install dependencies:
    \`\`\`bash
-   npm install express mongoose dotenv cors bcrypt
+   npm install
    \`\`\`
 3. Create a \`.env\` file with your MongoDB connection string.
 4. Start the server:
