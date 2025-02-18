@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# 1. Cleanup
+echo "Cleaning up old node_modules and lock files..."
+rm -rf node_modules package-lock.json yarn.lock
+
+# 2. Install Dependencies with legacy-peer-deps
+echo "Installing dependencies with legacy-peer-deps..."
+npm install --legacy-peer-deps
+
+# 3. Update Dependencies
+echo "Updating all dependencies to their latest compatible versions..."
+npx npm-check-updates -u
+
+# 4. Install updated dependencies
+echo "Installing updated dependencies..."
+npm install --legacy-peer-deps
+
+# 5. Resolve ESLint Conflicts
+echo "Resolving ESLint conflicts..."
+npm install --save-dev eslint@latest @typescript-eslint/parser@latest @typescript-eslint/eslint-plugin@latest eslint-config-react-app@latest
+
+# 6. Build
+echo "Running build to verify everything works..."
+npm run build
+
+# 7. Git Commit (Optional)
+read -p "Do you want to commit the changes to Git? (y/n): " commit_changes
+if [ "$commit_changes" = "y" ]; then
+  git add package.json package-lock.json
+  git commit -m "Updated dependencies and resolved conflicts"
+  git push
+fi
+
+echo "Script completed."
