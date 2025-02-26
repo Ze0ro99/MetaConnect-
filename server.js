@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 
 // تمكين CORS
 app.use(cors({
-    origin: 'http://localhost:3000' // استبدل هذا بالنطاق الصحيح لتطبيقك
+    origin: 'https://meta-connect-kiawcb5bh-ze0ro99s-projects.vercel.app' // استبدل هذا بالنطاق الصحيح لتطبيقك
 }));
 
 // لت解析 طلبات JSON
