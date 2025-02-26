@@ -1,0 +1,14 @@
+# رابط الخادم الخلفي (Backend)
+REACT_APP_BACKEND_URL=http://localhost:3001
+
+# مفتاح API الخاص بـ PI Network
+REACT_APP_PI_API_KEY=https://gist.github.com/Ze0ro99/2b29e99107e324b30a288e4deff1adea
+
+# إعدادات إضافية (اختيارية)
+REACT_APP_GOOGLE_CLIENT_ID=your-google-client-id  # مفتاح Google OAuth
+REACT_APP_GOOGLE_CLIENT_SECRET=your-google-client-secret  # سر Google OAuth
+REACT_APP_FACEBOOK_CLIENT_ID=your-facebook-client-id  # مفتاح Facebook OAuth
+REACT_APP_FACEBOOK_CLIENT_SECRET=your-facebook-client-secret  # سر Facebook OAuth
+REACT_APP_NODE_ENV=development  # يمكن تغييرها إلى production عند النشر
+REACT_APP_JWT_SECRET=your-jwt-secret-key  # مفتاح سري لتوقيع JWT
+REACT_APP_SESSION_SECRET=your-session-secret-key  # مفتاح سري لإدارة الجلسات
