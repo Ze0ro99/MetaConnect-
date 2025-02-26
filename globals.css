@@ -13,6 +13,7 @@ b, u, i, center {
   vertical-align: baseline;
 }
 
+/* Set default styles for body */
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
@@ -20,6 +21,7 @@ body {
   color: #333;
 }
 
+/* Links */
 a {
   color: #0070f3;
   text-decoration: none;
@@ -27,4 +29,78 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+/* Container to center content */
+.container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header styles */
+header {
+  background-color: #0070f3;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2em;
+}
+
+/* Footer styles */
+footer {
+  background-color: #0070f3;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+footer p {
+  margin: 0;
+}
+
+/* Button styles */
+button {
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #005bb5;
+}
+
+/* Form input styles */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input[type="submit"] {
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+input[type="submit"]:hover {
+  background-color: #005bb5;
 }
