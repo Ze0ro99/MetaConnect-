@@ -1,2 +1,4 @@
 flask==2.2.5
 pandas==1.5.3
+stellar-sdk
+requests
