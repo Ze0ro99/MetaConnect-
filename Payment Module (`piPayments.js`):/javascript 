@@ -1,16 +1,31 @@
 const { Pi } = require('@pihq/pi-node-sdk');
 
+// تهيئة مكتبة Pi باستخدام المفتاح API من المتغيرات البيئية
 const pi = Pi.init({
   apiKey: process.env.PI_API_KEY,
-  sandbox: true,
+  sandbox: process.env.NODE_ENV !== 'production', // استخدم وضع sandbox في البيئة غير الإنتاجية
 });
 
+/**
+ * يبدأ عملية دفع جديدة باستخدام Pi Network
+ * @param {number} amount - المبلغ المطلوب دفعه
+ * @param {string} memo - ملاحظة الدفع (وصف)
+ * @returns {Promise<Object>} - تفاصيل عملية الدفع
+ */
 async function initiatePayment(amount, memo) {
   try {
+    // تحقق من أن المبلغ والملاحظة معروفة
+    if (!amount || !memo) {
+      throw new Error('يجب تحديد المبلغ والملاحظة');
+    }
+
+    // إنشاء عملية دفع جديدة
     const payment = await pi.createPayment({ amount, memo });
     return payment;
   } catch (error) {
-    console.error('Payment initiation failed:', error);
+    // تسجيل الأخطاء التي تحدث أثناء عملية الدفع
+    console.error('فشل في بدء عملية الدفع:', error.message || error);
+    throw error;
   }
 }
 
