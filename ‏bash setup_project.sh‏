@@ -1,0 +1,154 @@
+#!/bin/bash
+
+# Create the folder structure
+mkdir -p my-App/src/components
+
+# Create the components
+cat <<EOL > my-App/src/components/Header.js
+import React from 'react';
+
+const Header = () => {
+  return (
+    <header>
+      <h1>MetaConnect</h1>
+      {/* Navigation links */}
+    </header>
+  );
+};
+
+export default Header;
+EOL
+
+cat <<EOL > my-App/src/components/Footer.js
+import React from 'react';
+
+const Footer = () => {
+  return (
+    <footer>
+      <p>&copy; 2025 MetaConnect</p>
+    </footer>
+  );
+};
+
+export default Footer;
+EOL
+
+cat <<EOL > my-App/src/components/Home.js
+import React from 'react';
+import Header from './Header';
+import Footer from './Footer';
+
+const Home = () => {
+  return (
+    <div>
+      <Header />
+      <h2>Welcome to MetaConnect!</h2>
+      <Footer />
+    </div>
+  );
+};
+
+export default Home;
+EOL
+
+cat <<EOL > my-App/src/components/Profile.js
+import React from 'react';
+import Header from './Header';
+import Footer from './Footer';
+
+const Profile = () => {
+  return (
+    <div>
+      <Header />
+      <h2>Your Profile</h2>
+      <Footer />
+    </div>
+  );
+};
+
+export default Profile;
+EOL
+
+cat <<EOL > my-App/src/components/VirtualWorld.js
+import React from 'react';
+import Header from './Header';
+import Footer from './Footer';
+
+const VirtualWorld = () => {
+  return (
+    <div>
+      <Header />
+      <h2>Virtual World</h2>
+      <Footer />
+    </div>
+  );
+};
+
+export default VirtualWorld;
+EOL
+
+# Create App.js file
+cat <<EOL > my-App/src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Home from './components/Home';
+import Profile from './components/Profile';
+import VirtualWorld from './components/VirtualWorld';
+
+const App = () => {
+  return (
+    <Router>
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/profile" component={Profile} />
+        <Route path="/virtual-world" component={VirtualWorld} />
+      </Switch>
+    </Router>
+  );
+};
+
+export default App;
+EOL
+
+# Create index.js file
+cat <<EOL > my-App/src/index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+EOL
+
+# Create package.json file
+cat <<EOL > my-App/package.json
+{
+  "name": "my-app",
+  "version": "1.0.0",
+  "description": "MetaConnect App",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-plugin-react": "^7.26.1"
+  },
+  "author": "Ze0ro99",
+  "license": "MIT"
+}
+EOL
+
+echo "Project structure created successfully!"
