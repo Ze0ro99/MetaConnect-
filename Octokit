@@ -1,51 +1,13 @@
-https://github.com/New-World-Hand99/demo-repository.git
-// Octokit.js
-// https://github.com/octokit/core.js#readme
-const octokit = new Octokit({
-  auth: 'YOUR-TOKEN'
-})
-
-await octokit.request('GET /octocat', {
-  headers: {
-    'X-GitHub-Api-Version': '2022-11-28'
-  }
-})// استيراد مكتبة Octokit
-const { Octokit } = require("@octokit/core");
-
-// استبدل 'YOUR-TOKEN' برمز المصادقة الخاص بك
-const octokit = new Octokit({
-  auth: 'YOUR-TOKEN' // يجب عليك إدخال رمز الوصول الشخصي هنا
-});
-
-// دالة لجلب بيانات المستخدم
-async function fetchData() {
-  try {
-    const response = await octokit.request('GET /users/octocat', {
-      headers: {
-        'X-GitHub-Api-Version': '2022-11-28'
-      }
-    });
-    console.log(response.data); // طباعة البيانات المسترجعة
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-}
-
-// استدعاء الدالة لجلب البيانات
-fetchData();
-إليك كود JavaScript كامل وجاهز للتشغيل باستخدام مكتبة Octokit.js، مع توحيد جميع التفاصيل اللازمة:
-
-```javascript
 // استيراد مكتبة Octokit
 const { Octokit } = require("@octokit/core");
 
 // استبدل 'YOUR-TOKEN' برمز المصادقة الخاص بك
 const octokit = new Octokit({
-  auth: 'YOUR-TOKEN' // يجب عليك إدخال رمز الوصول الشخصي هنا
+  auth: 'https://gist.github.com/Ze0ro99/e46dd44208e2e7824fbf63c8b588febb' // يجب عليك إدخال رمز الوصول الشخصي هنا
 });
 
 // دالة لجلب بيانات المستخدم
-async function fetchData() {
+async function fetchUserData() {
   try {
     const response = await octokit.request('GET /users/octocat', {
       headers: {
@@ -59,26 +21,4 @@ async function fetchData() {
 }
 
 // استدعاء الدالة لجلب البيانات
-fetchData();
-```
-
-### خطوات الإعداد:
-
-1. **تثبيت المكتبة**: تأكد من أنك قمت بتثبيت مكتبة Octokit عبر npm:
-
-   ```bash
-   npm install @octokit/core
-   ```
-
-2. **إنشاء ملف JavaScript**: يمكنك نسخ الكود أعلاه إلى ملف جديد، مثل `app.js`.
-
-3. **استبدال رمز المصادقة**: تأكد من استبدال `'YOUR-TOKEN'` برمز الوصول الشخصي الخاص بك الذي يمكن الحصول عليه من إعدادات حساب GitHub.
-
-4. **تشغيل البرنامج**: استخدم الأمر التالي في سطر الأوامر لتشغيل البرنامج:
-
-   ```bash
-   node app.js
-   ```
-
-### النتيجة:
-عند تشغيل الكود بنجاح، سيقوم البرنامج بطباعة معلومات المستخدم "octocat" في وحدة التحكم. تأكد من أن لديك اتصال بالإنترنت وأن رمز الوصول صحيح.
+fetchUserData();
