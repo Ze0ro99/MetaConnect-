@@ -1,0 +1,59 @@
+const fs = require('fs');
+const path = require('path');
+
+/**
+ * Checks if a given path is a file or a directory.
+ * @param {string} p - The path to check.
+ * @returns {Promise<string>} - 'file' if it's a file, 'directory' if it's a directory.
+ */
+async function checkPath(p) {
+  try {
+    const stats = await fs.promises.lstat(p);
+    if (stats.isDirectory()) {
+      return 'directory';
+    } else if (stats.isFile()) {
+      return 'file';
+    }
+  } catch (error) {
+    console.error(`Error checking path ${p}:`, error);
+  }
+}
+
+/**
+ * Modifies a given path by adding a suffix.
+ * @param {string} p - The path to modify.
+ * @param {string} suffix - The suffix to add.
+ * @returns {string} - The modified path.
+ */
+function modifyPath(p, suffix) {
+  const dirname = path.dirname(p);
+  const basename = path.basename(p);
+  return path.join(dirname, `${basename}${suffix}`);
+}
+
+/**
+ * Main function to check and modify paths.
+ * @param {string[]} paths - An array of paths to check and modify.
+ * @param {string} suffix - The suffix to add to each path.
+ */
+async function checkAndModifyPaths(paths, suffix) {
+  for (const p of paths) {
+    const result = await checkPath(p);
+    if (result === 'file') {
+      const modifiedPath = modifyPath(p, suffix);
+      console.log(`Modified path: ${modifiedPath}`);
+    } else if (result === 'directory') {
+      console.log(`Directory found: ${p}`);
+    } else {
+      console.log(`Unknown path type: ${p}`);
+    }
+  }
+}
+
+// Example usage
+const paths = [
+  'path/to/file.txt',
+  'path/to/directory',
+];
+
+checkAndModifyPaths(paths, '_modified');
